@@ -97,6 +97,7 @@ class HeaderBar(Gtk.HeaderBar):
         self.save_document_button.set_can_focus(False)
         self.save_document_button.set_tooltip_text(_('Save the current document') + ' (' + _('Ctrl') + '+S)')
         self.save_document_button.set_action_name('win.save')
+        self.save_document_button.set_visible(False)
         self.pack_end(self.save_document_button)
 
         # help and preview toggles
