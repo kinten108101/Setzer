@@ -111,8 +111,8 @@ class DocumentSwitcherPresenter(object):
         self.button.set_visible_child_name('welcome')
 
     def show_document_name(self, document):
-        mod_text = '*' if document.source_buffer.get_modified() else ''
-        self.button.document_name_label.set_text(document.get_basename() + mod_text)
+        self.button.document_name_mod_mark.set_visible(document.source_buffer.get_modified())
+        self.button.document_name_label.set_text(document.get_basename())
         dirname = document.get_dirname()
         if dirname != '':
             folder_text = dirname.replace(os.path.expanduser('~'), '~')
