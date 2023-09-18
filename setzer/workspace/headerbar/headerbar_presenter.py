@@ -66,12 +66,10 @@ class HeaderbarPresenter(object):
 
     def activate_latex_document_mode(self):
         self.show_pane_toggles()
-        self.view.save_document_button.show()
         self.view.get_style_context().remove_class('welcome')
 
     def activate_other_document_mode(self):
         self.hide_pane_toggles()
-        self.view.save_document_button.show()
         self.view.get_style_context().remove_class('welcome')
 
     def hide_pane_toggles(self):
