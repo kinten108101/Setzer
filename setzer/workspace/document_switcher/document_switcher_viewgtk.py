@@ -33,6 +33,11 @@ class OpenDocsButton(Gtk.Stack):
     def __init__(self):
         Gtk.Stack.__init__(self)
 
+        self.document_name_mod_mark = Gtk.Label()
+        self.document_name_mod_mark.get_style_context().add_class('title')
+        self.document_name_mod_mark.get_style_context().add_class('mod-mark')
+        self.document_name_mod_mark.set_ellipsize(Pango.EllipsizeMode.END)
+        self.document_name_mod_mark.set_label('•')
         self.document_name_label = Gtk.Label()
         self.document_name_label.get_style_context().add_class('title')
         self.document_name_label.set_ellipsize(Pango.EllipsizeMode.END)
@@ -40,8 +45,11 @@ class OpenDocsButton(Gtk.Stack):
         self.document_folder_label.get_style_context().add_class('subtitle')
         self.document_folder_label.set_ellipsize(Pango.EllipsizeMode.END)
         self.document_arrow = Gtk.Image.new_from_icon_name('pan-down-symbolic')
+        namebox = Gtk.CenterBox.new()
+        namebox.set_start_widget(self.document_name_mod_mark)
+        namebox.set_center_widget(self.document_name_label)
         vbox = Gtk.Box.new(Gtk.Orientation.VERTICAL, 0)
-        vbox.append(self.document_name_label)
+        vbox.append(namebox)
         vbox.append(self.document_folder_label)
         hbox = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 0)
         hbox.append(vbox)
@@ -64,6 +72,7 @@ class OpenDocsButton(Gtk.Stack):
 
         self.set_valign(Gtk.Align.FILL)
         self.center_button.set_valign(Gtk.Align.FILL)
+        self.center_button.set_halign(Gtk.Align.CENTER)
         self.center_label_welcome.set_valign(Gtk.Align.FILL)
 
         self.set_size_request(-1, 46)

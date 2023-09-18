@@ -62,29 +62,18 @@ popover.documentchooser box.not_found label {
 ** tab switching
 */
 
-.open-docs-popover-button {
-    margin: 0px;
-    padding: 0px;
+.open-docs-popover-button .title {
+    margin-top: -8px;
+    padding: 0;
 }
-.open-docs-popover-button > button {
-    margin: 0px;
-    padding-left: 8px;
-    padding-right: 18px;
-    border-radius: 0px;
-    box-shadow: none;
-    transition: none;
-    text-shadow: none;
+.open-docs-popover-button .title.mod-mark {
+    font-weight: 400;
+    margin-right: 6px;
+}
+.open-docs-popover-button .subtitle {
     font-weight: normal;
-}
-.open-docs-popover-button > button:hover:not(:checked):not(:active) {
-    background: none;
-    border-left: 1px solid @borders;
-    border-right: 1px solid @borders;
-}
-.open-docs-popover-button > button:checked, .open-docs-popover-button > button:active {
-    background: @borders;
-    border-left: 1px solid @borders;
-    border-right: 1px solid @borders;
+    margin-top: -4px;
+    margin-bottom: -4px;
 }
 .open-docs-popover list,
 .open-docs-popover row:not(:hover):not(:selected) {

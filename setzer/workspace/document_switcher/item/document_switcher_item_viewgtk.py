@@ -78,7 +78,7 @@ class OpenDocsPopoverItem(Gtk.ListBoxRow):
     def set_name(self, filename, modified_state):
         self.title = ''
         self.folder = ''
-        if modified_state == True: self.title += '*'
+        if modified_state == True: self.title = '•' + self.title
         if filename != None:
             fsplit = filename.rsplit('/', 1)
             if len(fsplit) > 1:
