@@ -22,6 +22,18 @@ from gi.repository import GLib
 from gi.repository import Gio
 
 
+class PopoverMenuTest(Gtk.PopoverMenu):
+
+    def __init__(self):
+        Gtk.PopoverMenu.__init__(self)
+        model = Gio.Menu()
+        self.set_menu_model(model)
+        current_section = Gio.Menu()
+        model.append_section(None, current_section)
+        self.page_map = dict()
+        self.page_map['main'] = (model, current_section)
+
+
 class PopoverMenu(Gtk.Popover):
 
     def __init__(self):
@@ -43,6 +55,69 @@ class PopoverMenu(Gtk.Popover):
 
     def on_close(self, popover):
         self.show_page(None, 'main', Gtk.StackTransitionType.NONE)
+
+
+prev_id = 0
+
+
+def generate_id():
+    global prev_id
+    prev_id = prev_id + 1
+    return prev_id
+
+
+class MenuBuilderTest():
+
+    def create_menu():
+        menu = PopoverMenuTest()
+        return menu
+
+    def create_button(label, icon_name=None, shortcut=None):
+        item = Gio.MenuItem()
+        if (label != None): item.set_label(label)
+        if (icon_name != None): item.set_icon_name(icon_name)
+        return item
+
+    def create_menu_button(label):
+        item = Gio.MenuItem()
+        if (label != None): item.set_label(label)
+        return item
+
+    def add_page(menu, pagename, label):
+        model = Gio.Menu()
+        current_section = Gio.Menu()
+        model.append_section(None, current_section)
+        menu.page_map[pagename] = (model, current_section)
+
+    def link_to_menu(menu, item, pagename):
+        page = menu.page_map.get(pagename)
+        assert page is not None
+        model = page[0]
+        item.set_submenu(model)
+
+    def add_item(menu, item, pagename='main'):
+        page = menu.page_map.get(pagename)
+        assert page is not None
+        current_section = page[1]
+        current_section.append_item(item)
+
+    def add_custom_widget(menu, widget, pagename='main'):
+        page = menu.page_map.get(pagename)
+        assert page is not None
+        current_section = page[1]
+        item = Gio.MenuItem()
+        id = str(generate_id())
+        item.set_attribute_value('custom', GLib.Variant('s', id))
+        current_section.append_item(item)
+        menu.add_child(widget, id)
+
+    def add_separator(menu, pagename='main'):
+        page = menu.page_map[pagename]
+        assert page is not None
+        model = page[0]
+        new_section = Gio.Menu()
+        model.append_section(None, new_section)
+        menu.page_map[pagename] = (model, new_section)
 
 
 class MenuBuilder():
