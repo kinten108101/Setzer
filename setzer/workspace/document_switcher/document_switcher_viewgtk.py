@@ -51,7 +51,7 @@ class OpenDocsButton(Gtk.Stack):
         vbox = Gtk.Box.new(Gtk.Orientation.VERTICAL, 0)
         vbox.append(namebox)
         vbox.append(self.document_folder_label)
-        hbox = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 0)
+        hbox = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 6)
         hbox.append(vbox)
         hbox.append(self.document_arrow)
         hbox.set_valign(Gtk.Align.CENTER)
