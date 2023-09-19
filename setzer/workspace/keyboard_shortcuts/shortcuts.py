@@ -49,6 +49,38 @@ class Shortcuts(object):
         self.shortcut_controller.set_propagation_phase(Gtk.PropagationPhase.CAPTURE)
         self.main_window.add_controller(self.shortcut_controller)
 
+        shortcuts = [
+            ('<Control>n', 'win.new-latex-document'),
+            ('<Control>o', 'win.open-document-dialog'),
+            ('<Control>s', 'win.save'),
+            ('<Control><Shift>s', 'win.save-as'),
+            ('<Control>w', 'win.close-active-document'),
+            ('<Control>q', 'win.quit'),
+            ('<Control>question', 'win.show-shortcuts-dialog'),
+            ('<Control>plus', 'win.zoom-in'),
+            ('<Control>minus', 'win.zoom-out'),
+            ('<Control>0', 'win.reset-zoom'),
+            ('<Control>f', 'win.start-search'),
+            ('<Control>h', 'win.start-search-and-replace'),
+            ('<Control>g', 'win.find-next'),
+            ('<Control><Shift>g', 'win.find-previous'),
+            ('<Control>x', 'win.cut'),
+            ('<Control>c', 'win.copy'),
+            ('<Control>v', 'win.paste'),
+            ('F5', 'win.save-and-build'),
+            ('F6', 'win.build'),
+            ('F7', 'win.forward-sync'),
+            ('<Control>z', 'win.undo'),
+            ('<Control><Shift>z', 'win.redo'),
+            ('<Control>k', 'win.toggle-comment'),
+            ('<Control>comma', 'win.show-preferences-dialog')
+        ]
+
+        for group in shortcuts:
+            shortcut_text = group[0]
+            action = group[1]
+            self.main_window.app.set_accels_for_action(action, [shortcut_text])
+
         actions = self.workspace.actions
         self.shortcut_controller.add_shortcut(Shortcut('<Control>n', actions.new_latex_document))
         self.shortcut_controller.add_shortcut(Shortcut('<Control>o', actions.open_document_dialog))

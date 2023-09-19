@@ -34,6 +34,7 @@ class Headerbar(object):
         self.view = ServiceLocator.get_main_window().headerbar
         self.controller = headerbar_controller.HeaderbarController(self, self.view)
         self.presenter = headerbar_presenter.HeaderbarPresenter(self, self.view)
+        self.view.update_actions()
 
         self.workspace.connect('document_removed', self.on_document_removed)
         self.workspace.connect('new_active_document', self.on_new_active_document)
