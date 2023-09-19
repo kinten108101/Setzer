@@ -22,7 +22,7 @@ from gi.repository import GLib
 from gi.repository import Gio
 
 import setzer.workspace.document_switcher.document_switcher_viewgtk as document_switcher_viewgtk
-import setzer.workspace.document_chooser_adw.document_chooser_viewgtk as document_chooser_viewgtk
+import setzer.workspace.document_chooser.document_chooser_viewgtk as document_chooser_viewgtk
 from setzer.helpers.popover_menu_builder import MenuBuilderTest
 
 
@@ -56,11 +56,10 @@ class HeaderBar(Gtk.HeaderBar):
         self.open_document_blank_button.set_action_name('win.open-document-dialog')
 
         self.document_chooser = document_chooser_viewgtk.DocumentChooser()
-        self.open_document_button_label = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 6)
+        self.open_document_button_label = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 12)
         self.open_document_button_label.append(Gtk.Label.new(_('Open')))
         self.open_document_button_label.append(Gtk.Image.new_from_icon_name('pan-down-symbolic'))
         self.open_document_button = Gtk.MenuButton()
-        self.open_document_button.get_style_context().add_class('flat')
         self.open_document_button.set_tooltip_text(_('Open a document') + ' (' + _('Shift') + '+' + _('Ctrl') + '+O)')
         self.open_document_button.set_child(self.open_document_button_label)
         self.open_document_button.set_popover(self.document_chooser)
@@ -71,7 +70,7 @@ class HeaderBar(Gtk.HeaderBar):
 
         self.new_document_popover = MenuBuilderTest.create_menu()
 
-        box = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 6)
+        box = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 12)
         box.append(Gtk.Image.new_from_icon_name('document-new-symbolic'))
         box.append(Gtk.Image.new_from_icon_name('pan-down-symbolic'))
 
@@ -80,7 +79,6 @@ class HeaderBar(Gtk.HeaderBar):
         self.new_document_button.set_can_focus(False)
         self.new_document_button.set_tooltip_text(_('Create a new document'))
         self.new_document_button.get_style_context().add_class('new-document-menu-button')
-        self.new_document_button.get_style_context().add_class('flat')
         self.new_document_button.set_popover(self.new_document_popover)
 
         self.pack_start(self.open_document_button)
@@ -96,7 +94,6 @@ class HeaderBar(Gtk.HeaderBar):
         self.save_document_button.set_can_focus(False)
         self.save_document_button.set_tooltip_text(_('Save the current document') + ' (' + _('Ctrl') + '+S)')
         self.save_document_button.set_action_name('win.save')
-        self.save_document_button.set_visible(False)
         self.pack_end(self.save_document_button)
 
         # help and preview toggles
@@ -141,7 +138,6 @@ class HeaderBar(Gtk.HeaderBar):
 
         self.menu_button = Gtk.MenuButton()
         image = Gtk.Image.new_from_icon_name('open-menu-symbolic')
-        self.menu_button.get_style_context().add_class('flat')
         self.menu_button.set_child(image)
         self.menu_button.set_can_focus(False)
         self.menu_button.set_popover(self.hamburger_popover)
