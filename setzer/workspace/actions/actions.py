@@ -93,8 +93,9 @@ class Actions(object):
         self.update_actions()
 
     def add_action(self, name, callback, parameter=None):
-        self.actions[name] = Gio.SimpleAction.new(name, parameter)
-        self.main_window.add_action(self.actions[name])
+        action = Gio.SimpleAction.new(name, parameter)
+        self.actions[name] = action
+        self.main_window.add_action(action)
         self.actions[name].connect('activate', callback)
 
     def on_new_document(self, workspace, document):

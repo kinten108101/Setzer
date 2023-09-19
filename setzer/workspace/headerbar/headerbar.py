@@ -21,12 +21,10 @@ from gi.repository import Gtk
 from gi.repository import Gio
 from gi.repository import GLib
 
-import os.path
-
 from setzer.app.service_locator import ServiceLocator
 from setzer.dialogs.dialog_locator import DialogLocator
-from setzer.popovers.helpers.popover_menu_builder import MenuBuilder
-from setzer.popovers.popover_manager import PopoverManager
+import setzer.workspace.headerbar.headerbar_controller as headerbar_controller
+import setzer.workspace.headerbar.headerbar_presenter as headerbar_presenter
 
 
 class Headerbar(object):
@@ -34,122 +32,68 @@ class Headerbar(object):
     def __init__(self, workspace):
         self.workspace = workspace
         self.view = ServiceLocator.get_main_window().headerbar
+        self.controller = headerbar_controller.HeaderbarController(self, self.view)
+        self.presenter = headerbar_presenter.HeaderbarPresenter(self, self.view)
+        self.view.update_actions()
 
         self.workspace.connect('document_removed', self.on_document_removed)
         self.workspace.connect('new_active_document', self.on_new_active_document)
-        self.workspace.connect('new_inactive_document', self.on_new_inactive_document)
         self.workspace.connect('update_recently_opened_documents', self.on_update_recently_opened_documents)
+        self.workspace.connect('update_recently_opened_session_files', self.on_update_recently_opened_session_files)
         self.workspace.connect('root_state_change', self.on_root_state_change)
 
-        self.activate_welcome_screen_mode()
+        self.presenter.activate_welcome_screen_mode()
 
     def on_document_removed(self, workspace, document):
         if self.workspace.active_document == None:
-            self.set_build_button_state()
-            self.activate_welcome_screen_mode()
+            self.presenter.set_build_button_state()
+            self.presenter.activate_welcome_screen_mode()
 
     def on_new_active_document(self, workspace, document):
-        self.set_build_button_state()
-        self.activate_document_mode()
-        self.show_document_name(document)
-        self.update_toggles()
-
-        document.connect('filename_change', self.on_name_change)
-        document.connect('displayname_change', self.on_name_change)
-        document.connect('modified_changed', self.on_modified_changed)
-
-    def on_new_inactive_document(self, workspace, document):
-        document.disconnect('filename_change', self.on_name_change)
-        document.disconnect('displayname_change', self.on_name_change)
-        document.disconnect('modified_changed', self.on_modified_changed)
+        self.presenter.set_build_button_state()
+        if document.is_latex_document():
+            self.presenter.activate_latex_document_mode()
+        else:
+            self.presenter.activate_other_document_mode()
 
     def on_root_state_change(self, workspace, state):
-        self.set_build_button_state()
-        self.update_toggles()
-
-    def on_name_change(self, document, name=None):
-        self.show_document_name(document)
-
-    def on_modified_changed(self, document):
-        self.show_document_name(document)
+        self.presenter.set_build_button_state()
 
     def on_update_recently_opened_documents(self, workspace, recently_opened_documents):
-        data = recently_opened_documents.values()
-        if len(data) > 0:
-            self.view.open_document_button.set_sensitive(True)
-            self.view.open_document_button.set_visible(True)
-            self.view.open_document_blank_button.set_visible(False)
+        self.presenter.update_recently_opened_documents(recently_opened_documents)
+
+    def on_update_recently_opened_session_files(self, workspace, recently_opened_session_files):
+        self.presenter.update_recently_opened_session_files(recently_opened_session_files)
+
+    def on_restore_session_click(self, button, parameter):
+        self.view.hamburger_popover.popdown()
+
+        if parameter == None:
+            DialogLocator.get_dialog('open_session').run(self.restore_session_cb)
         else:
-            self.view.open_document_button.set_sensitive(False)
-            self.view.open_document_button.set_visible(False)
-            self.view.open_document_blank_button.set_visible(True)
+            self.restore_session_cb(parameter)
 
-    def set_build_button_state(self):
-        document = self.workspace.get_root_or_active_latex_document()
+    def restore_session_cb(self, filename):
+        if filename == None: return
 
-        if document != None:
-            self.view.build_wrapper.set_end_widget(document.build_widget.view)
-            if document.build_widget.view.has_result():
-                document.build_widget.view.hide_timer(1600)
+        documents = self.workspace.get_all_documents()
+        unsaved_documents = self.workspace.get_unsaved_documents()
+        if unsaved_documents:
+            dialog = DialogLocator.get_dialog('close_confirmation')
+            dialog.run({'unsaved_documents': unsaved_documents, 'documents': documents, 'session_filename': filename}, self.close_confirmation_cb)
         else:
-            self.view.build_wrapper.set_end_widget(None)
+            if documents != None:
+                for document in documents:
+                    self.workspace.remove_document(document)
+            self.workspace.load_documents_from_session_file(filename)
 
-    def activate_welcome_screen_mode(self):
-        self.hide_sidebar_toggles()
-        self.hide_preview_help_toggles()
-        self.view.save_document_button.set_visible(False)
-        self.view.center_button.set_sensitive(False)
-        self.view.center_widget.set_visible_child_name('welcome')
-        self.view.get_style_context().add_class('welcome')
+    def close_confirmation_cb(self, parameters, response):
+        not_save_to_close_documents = response['not_save_to_close_documents']
 
-    def activate_document_mode(self):
-        self.view.save_document_button.set_visible(True)
-        self.view.center_button.set_sensitive(True)
-        self.view.center_widget.set_visible_child_name('button')
-        self.view.get_style_context().remove_class('welcome')
-
-    def show_document_name(self, document):
-        mod_text = '*' if document.source_buffer.get_modified() else ''
-        self.view.document_name_label.set_text(document.get_basename() + mod_text)
-        dirname = document.get_dirname()
-        if dirname != '':
-            folder_text = dirname.replace(os.path.expanduser('~'), '~')
-            self.view.document_folder_label.set_text(folder_text)
-            self.view.document_folder_label.set_visible(True)
-        else:
-            self.view.document_folder_label.set_visible(False)
-
-    def update_toggles(self):
-        if self.workspace.get_active_latex_document():
-            self.show_sidebar_toggles()
-        else:
-            self.hide_sidebar_toggles()
-
-        if self.workspace.get_root_or_active_latex_document():
-            self.show_preview_help_toggles()
-        else:
-            self.hide_preview_help_toggles()
-
-    def hide_sidebar_toggles(self):
-        self.view.sidebar_toggles_box.set_visible(False)
-        self.view.document_structure_toggle.set_sensitive(False)
-        self.view.symbols_toggle.set_sensitive(False)
-
-    def hide_preview_help_toggles(self):
-        self.view.preview_toggle.set_visible(False)
-        self.view.preview_toggle.set_sensitive(False)
-        self.view.help_toggle.set_visible(False)
-        self.view.help_toggle.set_sensitive(False)
-
-    def show_sidebar_toggles(self):
-        self.view.sidebar_toggles_box.set_visible(True)
-        self.view.document_structure_toggle.set_sensitive(True)
-        self.view.symbols_toggle.set_sensitive(True)
-
-    def show_preview_help_toggles(self):
-        self.view.preview_toggle.set_visible(True)
-        self.view.preview_toggle.set_sensitive(True)
-        self.view.help_toggle.set_visible(True)
-        self.view.help_toggle.set_sensitive(True)
+        if len(not_save_to_close_documents) == 0:
+            if parameters['documents'] != None:
+                for document in parameters['documents']:
+                    self.workspace.remove_document(document)
+            self.workspace.load_documents_from_session_file(parameters['session_filename'])
 
 
