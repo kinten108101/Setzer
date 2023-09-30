@@ -220,7 +220,6 @@ class PageBuildSystemView(Adw.PreferencesPage):
           _("Automatically remove helper files (.log, .dvi, …) after building .pdf."),
         )
         self.row_cleanup_build_files.add_suffix(self.option_cleanup_build_files)
-        self.row_cleanup_build_files.set_activatable_widget(self.option_cleanup_build_files)
 
         self.option_use_latexmk = Gtk.Switch()
         self.option_use_latexmk.set_valign(Gtk.Align.CENTER)
@@ -228,7 +227,6 @@ class PageBuildSystemView(Adw.PreferencesPage):
         self.row_use_latexmk = Adw.ActionRow()
         self.row_use_latexmk.set_title(_("Use Latexmk"))
         self.row_use_latexmk.add_suffix(self.option_use_latexmk)
-        self.row_use_latexmk.set_activatable_widget(self.option_use_latexmk)
 
         second_group = Adw.PreferencesGroup()
         second_group.set_title(_("Options"))
