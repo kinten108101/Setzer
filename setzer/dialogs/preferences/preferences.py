@@ -19,11 +19,10 @@ import gi
 gi.require_version('Gtk', '4.0')
 from gi.repository import Gtk
 
-import setzer.dialogs.preferences.preferences_viewgtk as view
-import setzer.dialogs.preferences.pages.page_build_system as page_build_system
-import setzer.dialogs.preferences.pages.page_editor as page_editor
-import setzer.dialogs.preferences.pages.page_font_color as page_font_color
-import setzer.dialogs.preferences.pages.page_autocomplete as page_autocomplete
+import setzer.dialogs.preferences.adw.preferences_viewgtk as view
+import setzer.dialogs.preferences.adw.pages.page_build_system as page_build_system
+import setzer.dialogs.preferences.adw.pages.page_editor as page_editor
+import setzer.dialogs.preferences.adw.pages.page_font_color as page_font_color
 from setzer.app.service_locator import ServiceLocator
 
 
@@ -35,7 +34,16 @@ class PreferencesDialog(object):
 
     def run(self):
         self.setup()
-        self.view.present()
+        self.view.dialog.show()
+        self.signal_connection_id = self.view.dialog.connect('response', self.close)
+
+    def close(self, view=None, response_id=None):
+        self.view.dialog.hide()
+        self.view.dialog.disconnect(self.signal_connection_id)
+        del(self.view)
+        del(self.page_build_system)
+        del(self.page_editor)
+        del(self.page_font_color)
 
     def setup(self):
         self.view = view.Preferences(self.main_window)
@@ -43,17 +51,14 @@ class PreferencesDialog(object):
         self.page_build_system = page_build_system.PageBuildSystem(self, self.settings)
         self.page_editor = page_editor.PageEditor(self, self.settings)
         self.page_font_color = page_font_color.PageFontColor(self, self.settings, self.main_window)
-        self.page_autocomplete = page_autocomplete.PageAutocomplete(self, self.settings)
 
         self.view.notebook.append_page(self.page_build_system.view, Gtk.Label.new(_('Build System')))
         self.view.notebook.append_page(self.page_editor.view, Gtk.Label.new(_('Editor')))
         self.view.notebook.append_page(self.page_font_color.view, Gtk.Label.new(_('Font & Colors')))
-        self.view.notebook.append_page(self.page_autocomplete.view, Gtk.Label.new(_('Autocomplete')))
 
         self.page_build_system.init()
         self.page_editor.init()
         self.page_font_color.init()
-        self.page_autocomplete.init()
 
     def on_check_button_toggle(self, button, preference_name):
         self.settings.set_value('preferences', preference_name, button.get_active())
