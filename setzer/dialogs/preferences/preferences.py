@@ -19,10 +19,10 @@ import gi
 gi.require_version('Gtk', '4.0')
 from gi.repository import Gtk
 
-import setzer.dialogs.preferences.preferences_viewgtk as view
-import setzer.dialogs.preferences.pages.page_build_system as page_build_system
-import setzer.dialogs.preferences.pages.page_editor as page_editor
-import setzer.dialogs.preferences.pages.page_font_color as page_font_color
+import setzer.dialogs.preferences.adw.preferences_viewgtk as view
+import setzer.dialogs.preferences.adw.pages.page_build_system as page_build_system
+import setzer.dialogs.preferences.adw.pages.page_editor as page_editor
+import setzer.dialogs.preferences.adw.pages.page_font_color as page_font_color
 from setzer.app.service_locator import ServiceLocator
 
 
