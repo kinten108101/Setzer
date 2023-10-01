@@ -113,6 +113,7 @@ class PageEditorView(Adw.PreferencesPage):
 
         self.row_space_tab = Adw.ComboRow()
         self.row_space_tab.set_title(_("Tab Mode"))
+        self.row_space_tab.set_subtitle(_("What character should be used for each inserted tab stop"))
         self.row_space_tab.set_model(combo_model_space_tab)
 
         self.tab_width_spinbutton = Gtk.SpinButton.new_with_range(1, 8, 1)
@@ -120,6 +121,7 @@ class PageEditorView(Adw.PreferencesPage):
 
         self.row_tab_width = Adw.ActionRow()
         self.row_tab_width.set_title(_("Tab Width"))
+        self.row_tab_width.set_subtitle(_("Adjust the amount of spaces per width"))
         self.row_tab_width.add_suffix(self.tab_width_spinbutton)
 
         tab_stop_group = Adw.PreferencesGroup()
@@ -132,6 +134,7 @@ class PageEditorView(Adw.PreferencesPage):
 
         self.row_show_line_numbers = Adw.ActionRow()
         self.row_show_line_numbers.set_title(_("Show Line Numbers"))
+        self.row_show_line_numbers.set_subtitle(_("Display line numbers next to each line of code"))
         self.row_show_line_numbers.add_suffix(self.option_show_line_numbers)
 
         line_numbers_group = Adw.PreferencesGroup()
@@ -142,7 +145,8 @@ class PageEditorView(Adw.PreferencesPage):
         self.option_line_wrapping.set_valign(Gtk.Align.CENTER)
 
         self.row_line_wrapping = Adw.ActionRow()
-        self.row_line_wrapping.set_title(_("Enable Wrapping"))
+        self.row_line_wrapping.set_title(_("Wrap Text"))
+        self.row_line_wrapping.set_subtitle(_("Should text be wrapped when wider than the frame"))
         self.row_line_wrapping.add_suffix(self.option_line_wrapping)
 
         line_wrapping_group = Adw.PreferencesGroup()
@@ -165,6 +169,7 @@ class PageEditorView(Adw.PreferencesPage):
 
         self.row_highlight_current_line = Adw.ActionRow()
         self.row_highlight_current_line.set_title(_("Highlight Current Line"))
+        self.row_highlight_current_line.set_subtitle(_("Make the current line stand out with highlights"))
         self.row_highlight_current_line.add_suffix(self.option_highlight_current_line)
 
         self.option_highlight_matching_brackets = Gtk.Switch()
@@ -172,10 +177,11 @@ class PageEditorView(Adw.PreferencesPage):
 
         self.row_highlight_matching_brackets = Adw.ActionRow()
         self.row_highlight_matching_brackets.set_title(_("Highlight Matching Brackets"))
+        self.row_highlight_matching_brackets.set_subtitle(_("Use cursor position to highlight matching brackets, braces, parenthesis, and more"))
         self.row_highlight_matching_brackets.add_suffix(self.option_highlight_matching_brackets)
 
         highlight_group = Adw.PreferencesGroup()
-        highlight_group.set_title(_("Highlight"))
+        highlight_group.set_title(_("Highlighting"))
         highlight_group.add(self.row_highlight_current_line)
         highlight_group.add(self.row_highlight_matching_brackets)
 
