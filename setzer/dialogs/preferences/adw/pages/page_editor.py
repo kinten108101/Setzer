@@ -161,6 +161,7 @@ class PageEditorView(Adw.PreferencesPage):
 
         self.row_code_folding = Adw.ActionRow()
         self.row_code_folding.set_title(_("Enable Code Folding"))
+        self.row_code_folding.set_subtitle(_("Selectively hide or display parts of the code"))
         self.row_code_folding.add_suffix(self.option_code_folding)
         self.row_code_folding.set_activatable_widget(self.option_code_folding)
 
