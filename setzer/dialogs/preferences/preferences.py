@@ -62,7 +62,7 @@ class PreferencesDialog(object):
 
     def on_check_button_toggle(self, button, preference_name):
         self.settings.set_value('preferences', preference_name, button.get_active())
-        
+
     def on_radio_button_toggle(self, button, preference_name, value):
         self.settings.set_value('preferences', preference_name, value)
 
@@ -77,5 +77,3 @@ class PreferencesDialog(object):
 
     def on_interpreter_changed(self, button, preference_name, value):
         self.settings.set_value('preferences', preference_name, value)
-
-
