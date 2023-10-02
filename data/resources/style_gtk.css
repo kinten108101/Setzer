@@ -476,6 +476,42 @@ box.preferences-page GtkSourceStyleSchemePreview image {
 }
 
 /*
+** adw-preferences
+*/
+
+.adw-preferences-page flowboxchild {
+    border: 2px solid @borders;
+    border-radius: 12px;
+    padding: 0px;
+    margin-right: 6px;
+    box-shadow: 0 0 0 1px alpha(black, 0.03),
+              0 1px 3px 1px alpha(black, .07),
+              0 2px 6px 2px alpha(black, .03);
+}
+.adw-preferences-page flowboxchild:selected {
+    border: 2px solid @accent_bg_color;
+}
+.adw-preferences-page GtkSourceStyleSchemePreview textview {
+    border-radius: 12px;
+    padding: 0px;
+    margin: 0px;
+}
+.adw-preferences-page GtkSourceStyleSchemePreview image {
+    background: @accent_bg_color;
+    color: @accent_fg_color;
+    border-radius: 12px;
+    padding: 2px;
+    margin: 4px;
+}
+.adw-preferences-page .preview scrolledwindow {
+    border-radius: 12px;
+}
+.adw-preferences-page textview.preview_textview {
+    border-radius: 12px;
+}
+
+
+/*
 ** document wizard
 */
 
