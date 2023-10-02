@@ -46,6 +46,7 @@ class OpenDocsButton(Gtk.Stack):
         self.document_folder_label.set_ellipsize(Pango.EllipsizeMode.END)
         self.document_arrow = Gtk.Image.new_from_icon_name('pan-down-symbolic')
         namebox = Gtk.CenterBox.new()
+        namebox.set_halign(Gtk.Align.CENTER)
         namebox.set_start_widget(self.document_name_mod_mark)
         namebox.set_center_widget(self.document_name_label)
         vbox = Gtk.Box.new(Gtk.Orientation.VERTICAL, 0)
