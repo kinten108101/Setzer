@@ -10,16 +10,19 @@ class NoteBook(object):
 
     def append_page(self, page, label_obj):
         page.set_title(label_obj.get_label())
-        self.preferences_window.add(page)
+        try:
+            self.preferences_window.add(page)
+        except e:
+            print(e)
 
 
 class PreferencesWindow(Adw.PreferencesWindow):
 
-    def connect(self, signal, *args):
+    def connect(self, signal, callback, *args):
         if (signal == 'response'):
             return super().connect("notify", self.default_callback)
         else:
-            return super().connect(signal, args)
+            return super().connect(signal, callback, *args)
 
     def default_callback(*args):
         pass
