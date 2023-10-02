@@ -20,6 +20,7 @@ import gi
 gi.require_version('Gtk', '4.0')
 from gi.repository import Gtk
 
+import setzer.dialogs.about.adw.about_dialog_view as AdwAboutDialogView
 from setzer.app.service_locator import ServiceLocator
 
 
@@ -34,7 +35,7 @@ class AboutDialog(object):
         del(self.view)
 
     def setup(self):
-        self.view = Gtk.AboutDialog()
+        self.view = AdwAboutDialogView.AboutDialog()
         self.view.set_transient_for(self.main_window)
         self.view.set_modal(True)
         self.view.set_program_name('Setzer')
