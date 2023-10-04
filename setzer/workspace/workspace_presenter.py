@@ -14,7 +14,8 @@
 # 
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>
-
+import gi
+from gi.repository import Adw
 from setzer.app.service_locator import ServiceLocator
 from setzer.app.font_manager import FontManager
 
@@ -141,6 +142,13 @@ class WorkspacePresenter(object):
 
     def update_colors(self):
         name = self.settings.get_value('preferences', 'color_scheme')
+        style_manager = Adw.StyleManager.get_default()
+        adw_color_scheme = 0
+        if "dark" in name:
+            adw_color_scheme = 4
+        else:
+            adw_color_scheme = 1
+        style_manager.set_color_scheme(adw_color_scheme)
         path = os.path.join(ServiceLocator.get_resources_path(), 'themes', name + '.css')
         self.main_window.css_provider_colors.load_from_path(path)
         try: self.workspace.help_panel.update_colors()
