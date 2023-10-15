@@ -62,25 +62,30 @@ popover.documentchooser box.not_found label {
 ** tab switching
 */
 
-.open-docs-popover-button .title {
-    margin-top: -8px;
-    padding: 0;
+.open-docs-popover-button {
+    margin: 0px;
+    padding: 0px;
 }
-.open-docs-popover-button .title.mod-mark {
-    font-weight: 400;
-    margin-right: 6px;
-}
-.open-docs-popover-button .subtitle {
+.open-docs-popover-button > button {
+    margin: 0px;
+    padding-left: 8px;
+    padding-right: 18px;
+    border-radius: 0px;
+    box-shadow: none;
+    transition: none;
+    text-shadow: none;
     font-weight: normal;
-    margin-top: -4px;
-    margin-bottom: -4px;
+}
+.open-docs-popover-button > button:hover:not(:checked):not(:active) {
+}
+.open-docs-popover-button > button:checked, .open-docs-popover-button > button:active {
 }
 .open-docs-popover list,
 .open-docs-popover row:not(:hover):not(:selected) {
-    background-color: @view_bg_color;
+    
 }
 .open-docs-popover row:hover:not(:active):not(:selected) {
-    background-color: @view_hover_color;
+    
 }
 .open-docs-popover scrollbar slider {
     min-height: 12px;
@@ -88,7 +93,7 @@ popover.documentchooser box.not_found label {
 .open-docs-popover row {
     border-radius: 6px;
     padding: 5px 5px 5px 8px;
-    color: @view_fg_color;
+    
 }
 .open-docs-popover list {
     padding: 0px;
@@ -171,23 +176,23 @@ box.buildlog > box button {
 */
 
 popover arrow {
-    background: @window_bg_color;
+    
 }
 popover contents {
-    background: @window_bg_color;
+    
 }
 popover button.action, popover button.menu, popover button.header {
     background: none;
     font-weight: normal;
 }
 popover button.action:hover, popover button.menu:hover, popover button.header:hover {
-    background: @view_hover_color;
+    
 }
 popover button.action:active, popover button.action:focus, popover button.menu:active, popover button.menu:focus, popover button.header:active, popover button.header:focus {
-    background: @borders;
+    
 }
 popover button label.shortcut {
-    color: @menu_shortcut_color;
+    
     margin-left: 18px;
 }
 popover separator {
@@ -474,42 +479,6 @@ box.preferences-page GtkSourceStyleSchemePreview image {
     padding: 2px;
     margin: 4px;
 }
-
-/*
-** adw-preferences
-*/
-
-.adw-preferences-page flowboxchild {
-    border: 2px solid @borders;
-    border-radius: 12px;
-    padding: 0px;
-    margin-right: 6px;
-    box-shadow: 0 0 0 1px alpha(black, 0.03),
-              0 1px 3px 1px alpha(black, .07),
-              0 2px 6px 2px alpha(black, .03);
-}
-.adw-preferences-page flowboxchild:selected {
-    border: 2px solid @accent_bg_color;
-}
-.adw-preferences-page GtkSourceStyleSchemePreview textview {
-    border-radius: 12px;
-    padding: 0px;
-    margin: 0px;
-}
-.adw-preferences-page GtkSourceStyleSchemePreview image {
-    background: @accent_bg_color;
-    color: @accent_fg_color;
-    border-radius: 12px;
-    padding: 2px;
-    margin: 4px;
-}
-.adw-preferences-page .preview scrolledwindow {
-    border-radius: 12px;
-}
-.adw-preferences-page textview.preview_textview {
-    border-radius: 12px;
-}
-
 
 /*
 ** document wizard
