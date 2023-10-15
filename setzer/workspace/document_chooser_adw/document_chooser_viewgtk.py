@@ -30,19 +30,6 @@ class DocumentChooserEntry(Gtk.Box):
 
         self.append(vbox_left)
 
-        vbox_right = Gtk.Box()
-        vbox_right.set_orientation(Gtk.Orientation.VERTICAL)
-        vbox_right.set_valign(Gtk.Align.CENTER)
-
-        remove = Gtk.Button()
-        remove.set_icon_name("cross-symbolic")
-        remove.set_tooltip_text(_("Remove"))
-        remove.get_style_context().add_class("flat")
-        remove.get_style_context().add_class("circular")
-        vbox_right.append(remove)
-
-        self.append(vbox_right)
-
 
 class DocumentChooser(Gtk.Popover):
 
@@ -52,7 +39,7 @@ class DocumentChooser(Gtk.Popover):
         Gtk.Popover.__init__(self)
         self.pages = dict()
         self.get_style_context().add_class("documentchooser_adw")
-        self.set_size_request(450, -1)
+        self.set_size_request(400, -1)
         self.set_offset(75, 0)
         vbox = Gtk.Box()
         vbox.set_orientation(Gtk.Orientation.VERTICAL)
@@ -73,7 +60,7 @@ class DocumentChooser(Gtk.Popover):
         tophbox.append(self.search_entry)
 
         self.other_documents_button = Gtk.Button()
-        self.other_documents_button.set_tooltip_text(_("Open Other Documents") + " (" + _("Ctrl + O") + ")")
+        self.other_documents_button.set_tooltip_text(_("Open Other Documents") + " (" + _("Ctrl+O") + ")")
         self.other_documents_button.set_icon_name("document-open-symbolic")
         tophbox.append(self.other_documents_button)
 
