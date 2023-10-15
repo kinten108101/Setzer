@@ -22,7 +22,7 @@ from gi.repository import GLib
 from gi.repository import Gio
 
 import setzer.workspace.document_switcher.document_switcher_viewgtk as document_switcher_viewgtk
-import setzer.workspace.document_chooser.document_chooser_viewgtk as document_chooser_viewgtk
+import setzer.workspace.document_chooser_adw.document_chooser_viewgtk as document_chooser_viewgtk
 from setzer.helpers.popover_menu_builder import MenuBuilderTest
 
 
