@@ -93,6 +93,7 @@ class Settings(Observable):
         textview.set_monospace(True)
         font_string = textview.get_pango_context().get_font_description().to_string()
         self.defaults['preferences']['font_string'] = font_string
+        self.defaults['preferences']['follow_mode'] = 'manual'
 
     def get_value(self, section, item):
         try: value = self.data[section][item]

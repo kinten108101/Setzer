@@ -18,7 +18,7 @@
 import gi
 gi.require_version('GtkSource', '5')
 gi.require_version('Gtk', '4.0')
-from gi.repository import GtkSource, Gtk, GObject
+from gi.repository import GtkSource, Gtk, GObject, Adw
 
 import os.path, time
 
@@ -58,7 +58,6 @@ class Document(Observable):
         self.source_buffer = GtkSource.Buffer()
         self.source_buffer.set_language(ServiceLocator.get_source_language(language))
         self.source_view = GtkSource.View.new_with_buffer(self.source_buffer)
-        self.source_buffer.set_style_scheme(ServiceLocator.get_style_scheme())
         self.source_buffer.connect('modified-changed', self.on_modified_change)
         self.source_buffer.connect('changed', self.on_change)
         self.source_buffer.connect('notify::cursor-position', self.on_cursor_position_change)
@@ -78,13 +77,15 @@ class Document(Observable):
         if self.is_latex_document(): self.bracket_completion = bracket_completion.BracketCompletion(self)
         if self.is_latex_document(): self.autocomplete = autocomplete.Autocomplete(self)
 
-        self.settings.connect('settings_changed', self.on_settings_changed)
+        style_manager = Adw.StyleManager.get_default()
+        self.on_adw_style_manager_notify_dark(style_manager)
+        style_manager.connect('notify::dark', self.on_adw_style_manager_notify_dark)
 
-    def on_settings_changed(self, settings, parameter):
-        section, item, value = parameter
-
-        if item == 'color_scheme':
-            self.source_buffer.set_style_scheme(ServiceLocator.get_style_scheme())
+    def on_adw_style_manager_notify_dark(self, object, pspec=None):
+        name = 'default'
+        if object.get_dark():
+            name = 'default-dark'
+        self.source_buffer.set_style_scheme(ServiceLocator.get_source_style_scheme_manager().get_scheme(name))
 
     def set_filename(self, filename):
         if filename == None:
