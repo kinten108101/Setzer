@@ -63,8 +63,10 @@ popover.documentchooser box.not_found label {
 */
 
 .open-docs-popover-button .title {
-    margin-top: -8px;
     padding: 0;
+}
+.open-docs-popover-button .title.has-subtitle {
+    margin-top: -8px;
 }
 .open-docs-popover-button .title.mod-mark {
     font-weight: 400;
