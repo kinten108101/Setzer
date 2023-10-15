@@ -27,15 +27,17 @@ import setzer.document.preview.preview as preview
 from setzer.helpers.observable import Observable
 import setzer.workspace.workspace_presenter as workspace_presenter
 import setzer.workspace.workspace_controller as workspace_controller
-import setzer.workspace.preview_panel.preview_panel as preview_panel
+import setzer.workspace.preview_panel.preview_panel_presenter as preview_panel_presenter
 import setzer.workspace.help_panel.help_panel as help_panel
 import setzer.workspace.welcome_screen.welcome_screen as welcome_screen
 import setzer.workspace.headerbar.headerbar as headerbar
 import setzer.workspace.sidebar.sidebar as sidebar
 import setzer.workspace.shortcutsbar.shortcutsbar as shortcutsbar
 import setzer.workspace.build_log.build_log as build_log
+import setzer.workspace.keyboard_shortcuts.shortcuts as shortcuts
+import setzer.workspace.document_switcher.document_switcher as document_switcher
+import setzer.workspace.document_chooser_adw.document_chooser as document_chooser
 import setzer.workspace.actions.actions as actions
-import setzer.workspace.context_menu.context_menu as context_menu
 from setzer.app.service_locator import ServiceLocator
 from setzer.settings.document_settings import DocumentSettings
 
@@ -51,6 +53,7 @@ class Workspace(Observable):
         self.open_latex_documents = list()
         self.root_document = None
         self.recently_opened_documents = dict()
+        self.untitled_documents_no = 0
 
         self.active_document = None
 
@@ -65,17 +68,20 @@ class Workspace(Observable):
         self.show_symbols = self.settings.get_value('window_state', 'show_symbols')
         self.show_document_structure = self.settings.get_value('window_state', 'show_document_structure')
 
-    def init_workspace_controller(self):
         self.welcome_screen = welcome_screen.WelcomeScreen()
         self.sidebar = sidebar.Sidebar(self)
+
+    def init_workspace_controller(self):
         self.actions = actions.Actions(self)
         self.shortcutsbar = shortcutsbar.Shortcutsbar(self)
-        self.context_menu = context_menu.ContextMenu(self)
+        self.shortcuts = shortcuts.Shortcuts(self)
         self.presenter = workspace_presenter.WorkspacePresenter(self)
         self.headerbar = headerbar.Headerbar(self)
-        self.preview_panel = preview_panel.PreviewPanel(self)
+        self.preview_panel = preview_panel_presenter.PreviewPanelPresenter(self)
         self.help_panel = help_panel.HelpPanel(self)
         self.build_log = build_log.BuildLog(self)
+        self.document_chooser = document_chooser.DocumentChooser(self)
+        self.document_switcher = document_switcher.DocumentSwitcher(self)
         self.controller = workspace_controller.WorkspaceController(self)
 
     def open_document_by_filename(self, filename):
@@ -98,11 +104,9 @@ class Workspace(Observable):
     
     def add_document(self, document):
         if document in self.open_documents: return False
-
         if document.get_filename() == None:
-            increment = ServiceLocator.get_increment('untitled_documents_added')
-            document.set_displayname(_('Untitled Document {number}').format(number=str(increment)))
-
+            document.set_displayname(_('Untitled Document {number}').format(number=str(self.untitled_documents_no + 1)))
+            self.untitled_documents_no += 1
         self.open_documents.append(document)
         if document.is_latex_document():
             self.open_latex_documents.append(document)
@@ -167,7 +171,7 @@ class Workspace(Observable):
 
     def get_active_document(self):
         return self.active_document
-
+        
     def set_active_document(self, document):
         if self.active_document != None:
             self.add_change_code('new_inactive_document', self.active_document)
@@ -181,6 +185,7 @@ class Workspace(Observable):
             self.active_document.set_last_activated(time.time())
             self.update_preview_visibility(self.active_document)
             self.add_change_code('new_active_document', document)
+            self.shortcuts.set_document_type(self.active_document.get_document_type())
             self.set_build_log()
 
     def set_build_log(self):
@@ -333,10 +338,11 @@ class Workspace(Observable):
         for document in self.open_documents:
             if document.source_buffer.get_modified():
                 unsaved_documents.append(document)
-        return unsaved_documents
 
+        return unsaved_documents if len(unsaved_documents) >= 1 else None
+        
     def get_all_documents(self):
-        return self.open_documents.copy()
+        return self.open_documents.copy() if len(self.open_documents) >= 1 else None
 
     def set_one_document_root(self, root_document):
         if root_document.is_latex_document():
@@ -361,13 +367,6 @@ class Workspace(Observable):
 
     def get_root_document(self):
         return self.root_document
-
-    def get_active_latex_document(self):
-        if self.get_active_document() == None:
-            return None
-        if self.active_document.is_latex_document():
-            return self.active_document
-        return None
 
     def get_root_or_active_latex_document(self):
         if self.get_active_document() == None:
