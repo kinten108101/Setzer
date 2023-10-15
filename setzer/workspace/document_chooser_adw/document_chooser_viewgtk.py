@@ -60,7 +60,7 @@ class DocumentChooser(Gtk.Popover):
         tophbox.append(self.search_entry)
 
         self.other_documents_button = Gtk.Button()
-        self.other_documents_button.set_tooltip_text(_("Open Other Documents") + " (" + _("Ctrl + O") + ")")
+        self.other_documents_button.set_tooltip_text(_("Open Other Documents") + " (" + _("Ctrl+O") + ")")
         self.other_documents_button.set_icon_name("document-open-symbolic")
         tophbox.append(self.other_documents_button)
 
