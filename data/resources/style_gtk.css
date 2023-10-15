@@ -62,6 +62,9 @@ popover.documentchooser box.not_found label {
 ** tab switching
 */
 
+.open-docs-popover-button {
+    margin: 0px;
+}
 .open-docs-popover-button .title {
     padding: 0;
 }
