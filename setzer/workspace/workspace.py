@@ -36,7 +36,7 @@ import setzer.workspace.shortcutsbar.shortcutsbar as shortcutsbar
 import setzer.workspace.build_log.build_log as build_log
 import setzer.workspace.keyboard_shortcuts.shortcuts as shortcuts
 import setzer.workspace.document_switcher.document_switcher as document_switcher
-import setzer.workspace.document_chooser.document_chooser as document_chooser
+import setzer.workspace.document_chooser_adw.document_chooser as document_chooser
 import setzer.workspace.actions.actions as actions
 from setzer.app.service_locator import ServiceLocator
 from setzer.settings.document_settings import DocumentSettings

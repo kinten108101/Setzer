@@ -58,6 +58,54 @@ popover.documentchooser box.not_found label {
     opacity: 0.65;
 }
 
+/*
+** open documents adw
+*/
+
+/* popover */
+.documentchooser_adw contents {
+  padding: 0;
+  margin: 0;
+}
+
+.documentchooser_adw listview {
+  margin-top: 0px;
+}
+
+.documentchooser_adw separator {
+    margin-bottom: 0px;
+}
+
+.documentchooser_adw .navigation-sidebar row {
+  margin-left: 0;
+  margin-right: 0;
+  padding: 4px 8px 4px 16px;
+}
+
+.documentchooser_adw .navigation-sidebar row:not(:first-child) {
+  margin-top: 4px;
+}
+
+.documentchooser_adw .navigation-sidebar row:active {
+  background-color: alpha(currentColor, 0.05);
+}
+
+.documentchooser_adw .file_name {
+  font-size: medium;
+}
+
+.documentchooser_adw .file_path {
+  font-size: small;
+}
+
+.documentchooser_adw .empty_page_content {
+  margin: 16px;
+}
+
+.documentchooser_adw .noresult_content {
+  margin: 16px;
+}
+
 /* 
 ** tab switching
 */
