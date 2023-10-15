@@ -77,21 +77,15 @@ popover.documentchooser box.not_found label {
     font-weight: normal;
 }
 .open-docs-popover-button > button:hover:not(:checked):not(:active) {
-    background: none;
-    border-left: 1px solid @borders;
-    border-right: 1px solid @borders;
 }
 .open-docs-popover-button > button:checked, .open-docs-popover-button > button:active {
-    background: @borders;
-    border-left: 1px solid @borders;
-    border-right: 1px solid @borders;
 }
 .open-docs-popover list,
 .open-docs-popover row:not(:hover):not(:selected) {
-    background-color: @view_bg_color;
+    
 }
 .open-docs-popover row:hover:not(:active):not(:selected) {
-    background-color: @view_hover_color;
+    
 }
 .open-docs-popover scrollbar slider {
     min-height: 12px;
@@ -99,7 +93,7 @@ popover.documentchooser box.not_found label {
 .open-docs-popover row {
     border-radius: 6px;
     padding: 5px 5px 5px 8px;
-    color: @view_fg_color;
+    
 }
 .open-docs-popover list {
     padding: 0px;
@@ -182,23 +176,23 @@ box.buildlog > box button {
 */
 
 popover arrow {
-    background: @window_bg_color;
+    
 }
 popover contents {
-    background: @window_bg_color;
+    
 }
 popover button.action, popover button.menu, popover button.header {
     background: none;
     font-weight: normal;
 }
 popover button.action:hover, popover button.menu:hover, popover button.header:hover {
-    background: @view_hover_color;
+    
 }
 popover button.action:active, popover button.action:focus, popover button.menu:active, popover button.menu:focus, popover button.header:active, popover button.header:focus {
-    background: @borders;
+    
 }
 popover button label.shortcut {
-    color: @menu_shortcut_color;
+    
     margin-left: 18px;
 }
 popover separator {
