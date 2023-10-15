@@ -42,6 +42,7 @@ class WorkspacePresenter(object):
         self.update_font()
         self.update_colors()
         self.setup_paneds()
+        self.setup_colors()
 
     def on_settings_changed(self, settings, parameter):
         section, item, value = parameter
@@ -49,7 +50,7 @@ class WorkspacePresenter(object):
         if item in ['font_string', 'use_system_font']:
             self.update_font()
 
-        if item == 'color_scheme':
+        if item in ['color_scheme', 'follow_mode']:
             self.update_colors()
 
     def on_new_document(self, workspace, document):
@@ -152,17 +153,15 @@ class WorkspacePresenter(object):
 
     def update_colors(self):
         name = self.settings.get_value('preferences', 'color_scheme')
+        follow_mode = self.settings.get_value('preferences', 'follow_mode')
         style_manager = Adw.StyleManager.get_default()
         adw_color_scheme = 0
-        if "dark" in name:
-            adw_color_scheme = 4
-        else:
-            adw_color_scheme = 1
+        if follow_mode == 'manual':
+            if "dark" in name:
+                adw_color_scheme = 4
+            else:
+                adw_color_scheme = 1
         style_manager.set_color_scheme(adw_color_scheme)
-        path = os.path.join(ServiceLocator.get_resources_path(), 'themes', name + '.css')
-        self.main_window.css_provider_colors.load_from_path(path)
-        try: self.workspace.help_panel.update_colors()
-        except AttributeError: pass
 
     def setup_paneds(self):
         show_sidebar = (self.workspace.show_symbols or self.workspace.show_document_structure)
@@ -196,4 +195,17 @@ class WorkspacePresenter(object):
         self.main_window.headerbar.preview_toggle.set_active(self.workspace.show_preview)
         self.main_window.headerbar.help_toggle.set_active(self.workspace.show_help)
 
+    def setup_colors(self):
+        style_manager = Adw.StyleManager.get_default()
+        self.on_adw_style_manager_notify_dark(style_manager)
+        style_manager.connect('notify::dark', self.on_adw_style_manager_notify_dark)
 
+    def on_adw_style_manager_notify_dark(self, object, pspec=None):
+        name = 'default'
+        if object.get_dark():
+            name = 'default-dark'
+        print(name)
+        path = os.path.join(ServiceLocator.get_resources_path(), 'themes', name + '.css')
+        self.main_window.css_provider_colors.load_from_path(path)
+        try: self.workspace.help_panel.update_colors()
+        except AttributeError: pass
