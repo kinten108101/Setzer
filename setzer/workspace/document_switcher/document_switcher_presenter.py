@@ -117,10 +117,12 @@ class DocumentSwitcherPresenter(object):
         if dirname != '':
             folder_text = dirname.replace(os.path.expanduser('~'), '~')
             self.button.document_name_label.get_style_context().add_class('has-subtitle')
+            self.button.document_name_mod_mark.get_style_context().add_class('has-subtitle')
             self.button.document_folder_label.set_text(folder_text)
             self.button.document_folder_label.show()
         else:
             self.button.document_name_label.get_style_context().remove_class('has-subtitle')
+            self.button.document_name_mod_mark.get_style_context().remove_class('has-subtitle')
             self.button.document_folder_label.hide()
         self.button.center_button.set_sensitive(True)
         self.button.set_visible_child_name('button')
