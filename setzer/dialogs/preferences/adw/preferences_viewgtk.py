@@ -10,6 +10,7 @@ class NoteBook(object):
 
     def append_page(self, page, label_obj):
         page.set_title(label_obj.get_label())
+        page.set_use_underline(True)
         try:
             self.preferences_window.add(page)
         except e:

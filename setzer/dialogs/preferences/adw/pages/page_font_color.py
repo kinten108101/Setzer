@@ -268,7 +268,8 @@ This is a \\textit{preview}, for $x, y \\in \\mathbb{R}: x \\leq y$ or $x > y$.
             combo_model_follow_mode.append(name)
 
         self.row_follow_mode = Adw.ComboRow()
-        self.row_follow_mode.set_title(_("Application Style"))
+        self.row_follow_mode.set_title(_("_Application Style"))
+        self.row_follow_mode.set_use_underline(True)
         self.row_follow_mode.set_model(combo_model_follow_mode)
 
         theme_mode_group = Adw.PreferencesGroup()
@@ -289,13 +290,15 @@ This is a \\textit{preview}, for $x, y \\in \\mathbb{R}: x \\leq y$ or $x > y$.
         self.font_chooser_button.add_css_class('flat')
 
         self.subrow_use_font = Adw.ActionRow()
-        self.subrow_use_font.set_title(_("Fonts"))
+        self.subrow_use_font.set_title(_("_Fonts"))
+        self.subrow_use_font.set_use_underline(True)
         self.subrow_use_font.set_subtitle(_("The font used within the editor"))
         self.subrow_use_font.add_suffix(self.font_chooser_button)
         self.subrow_use_font.set_activatable_widget(self.font_chooser_button)
 
         self.row_use_custom_font = Adw.ExpanderRow()
-        self.row_use_custom_font.set_title(_("Custom Font"))
+        self.row_use_custom_font.set_title(_("_Custom Font"))
+        self.row_use_custom_font.set_use_underline(True)
         self.row_use_custom_font.bind_property('expanded', self.option_use_custom_font, 'active', GObject.BindingFlags.BIDIRECTIONAL | GObject.BindingFlags.SYNC_CREATE)
         self.row_use_custom_font.add_action(self.option_use_custom_font)
         self.row_use_custom_font.add_row(self.subrow_use_font)

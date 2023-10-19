@@ -112,7 +112,8 @@ class PageEditorView(Adw.PreferencesPage):
             combo_model_space_tab.append(name)
 
         self.row_space_tab = Adw.ComboRow()
-        self.row_space_tab.set_title(_("Tab Mode"))
+        self.row_space_tab.set_title(_("Tab _Mode"))
+        self.row_space_tab.set_use_underline(True)
         self.row_space_tab.set_subtitle(_("What character should be used for each inserted tab stop"))
         self.row_space_tab.set_model(combo_model_space_tab)
 
@@ -121,7 +122,8 @@ class PageEditorView(Adw.PreferencesPage):
         self.tab_width_spinbutton.set_valign(Gtk.Align.CENTER)
 
         self.row_tab_width = Adw.ActionRow()
-        self.row_tab_width.set_title(_("Tab Width"))
+        self.row_tab_width.set_title(_("Tab _Width"))
+        self.row_tab_width.set_use_underline(True)
         self.row_tab_width.set_subtitle(_("Adjust the amount of spaces per width"))
         self.row_tab_width.add_suffix(self.tab_width_spinbutton)
         self.row_tab_width.set_activatable_widget(self.tab_width_spinbutton)
@@ -136,7 +138,8 @@ class PageEditorView(Adw.PreferencesPage):
         self.option_show_line_numbers.set_valign(Gtk.Align.CENTER)
 
         self.row_show_line_numbers = Adw.ActionRow()
-        self.row_show_line_numbers.set_title(_("Show Line Numbers"))
+        self.row_show_line_numbers.set_title(_("Show _Line Numbers"))
+        self.row_show_line_numbers.set_use_underline(True)
         self.row_show_line_numbers.set_subtitle(_("Display line numbers next to each line of code"))
         self.row_show_line_numbers.add_suffix(self.option_show_line_numbers)
         self.row_show_line_numbers.set_activatable_widget(self.option_show_line_numbers)
@@ -150,7 +153,8 @@ class PageEditorView(Adw.PreferencesPage):
         self.option_line_wrapping.set_valign(Gtk.Align.CENTER)
 
         self.row_line_wrapping = Adw.ActionRow()
-        self.row_line_wrapping.set_title(_("Wrap Text"))
+        self.row_line_wrapping.set_title(_("_Wrap Text"))
+        self.row_line_wrapping.set_use_underline(True)
         self.row_line_wrapping.set_subtitle(_("Should text be wrapped when wider than the frame"))
         self.row_line_wrapping.add_suffix(self.option_line_wrapping)
         self.row_line_wrapping.set_activatable_widget(self.option_line_wrapping)
@@ -164,7 +168,8 @@ class PageEditorView(Adw.PreferencesPage):
         self.option_code_folding.set_valign(Gtk.Align.CENTER)
 
         self.row_code_folding = Adw.ActionRow()
-        self.row_code_folding.set_title(_("Enable Code Folding"))
+        self.row_code_folding.set_title(_("Enable Code _Folding"))
+        self.row_code_folding.set_use_underline(True)
         self.row_code_folding.set_subtitle(_("Selectively hide or display parts of the code"))
         self.row_code_folding.add_suffix(self.option_code_folding)
         self.row_code_folding.set_activatable_widget(self.option_code_folding)
@@ -178,7 +183,8 @@ class PageEditorView(Adw.PreferencesPage):
         self.option_highlight_current_line.set_valign(Gtk.Align.CENTER)
 
         self.row_highlight_current_line = Adw.ActionRow()
-        self.row_highlight_current_line.set_title(_("Highlight Current Line"))
+        self.row_highlight_current_line.set_title(_("_Highlight Current Line"))
+        self.row_highlight_current_line.set_use_underline(True)
         self.row_highlight_current_line.set_subtitle(_("Make the current line stand out with highlights"))
         self.row_highlight_current_line.add_suffix(self.option_highlight_current_line)
         self.row_highlight_current_line.set_activatable_widget(self.option_highlight_current_line)
@@ -188,7 +194,8 @@ class PageEditorView(Adw.PreferencesPage):
         self.option_highlight_matching_brackets.set_valign(Gtk.Align.CENTER)
 
         self.row_highlight_matching_brackets = Adw.ActionRow()
-        self.row_highlight_matching_brackets.set_title(_("Highlight Matching Brackets"))
+        self.row_highlight_matching_brackets.set_title(_("Highlight Matching Brac_kets"))
+        self.row_highlight_matching_brackets.set_use_underline(True)
         self.row_highlight_matching_brackets.set_subtitle(_("Use cursor position to highlight matching brackets, braces, parenthesis, and more"))
         self.row_highlight_matching_brackets.add_suffix(self.option_highlight_matching_brackets)
         self.row_highlight_matching_brackets.set_activatable_widget(self.option_highlight_matching_brackets)
