@@ -128,7 +128,7 @@ class CloseConfirmationDialog(object):
             message_area.append(scrolled_window)
             message_area.append(secondary_text_label)
 
-        self.view.add_buttons(_('Close _without Saving'), Gtk.ResponseType.NO, _('_Cancel'), Gtk.ResponseType.CANCEL, _('_Save'), Gtk.ResponseType.YES)
+        self.view.add_buttons(_('_Cancel'), Gtk.ResponseType.CANCEL, _('_Discard All'), Gtk.ResponseType.NO, _('_Save'), Gtk.ResponseType.YES)
         self.view.set_default_response(Gtk.ResponseType.YES)
 
 
