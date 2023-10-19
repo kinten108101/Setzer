@@ -21,6 +21,7 @@ gi.require_version('Gtk', '4.0')
 from gi.repository import Gtk
 
 import os.path
+from setzer.dialogs.close_confirmation.adw.message_dialog import AdaptedAdwMessageDialog as MessageDialog
 
 
 class CloseConfirmationDialog(object):
@@ -92,7 +93,7 @@ class CloseConfirmationDialog(object):
         del(self.view)
 
     def setup(self, documents):
-        self.view = Gtk.MessageDialog()
+        self.view = MessageDialog()
         self.view.set_transient_for(self.main_window)
         self.view.set_modal(True)
         self.view.set_property('message-type', Gtk.MessageType.QUESTION)
