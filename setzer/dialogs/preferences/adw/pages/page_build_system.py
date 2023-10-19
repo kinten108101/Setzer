@@ -204,7 +204,7 @@ class PageBuildSystemView(Adw.PreferencesPage):
         self.tectonic_warning_label.add_css_class("dim-label")
         self.tectonic_warning_label.add_css_class("caption")
         self.tectonic_warning_label.set_label(
-          _("Please note: the Tectonic backend uses only the V1 command-line interface. Tectonic.toml configuration files are ignored."),
+          _("The Tectonic backend uses only the V1 command-line interface. Tectonic.toml configuration files are ignored."),
         )
 
         first_group = Adw.PreferencesGroup()
