@@ -53,8 +53,35 @@ class PreferencesDialog(object):
         self.page_font_color = page_font_color.PageFontColor(self, self.settings, self.main_window)
 
         self.view.notebook.append_page(self.page_build_system.view, Gtk.Label.new(_('_Build System')))
+        if hasattr(self.view.dialog, 'shortcut_controller'):
+            shortcut = Gtk.Shortcut()
+
+            def on_shortcut_activated(obj, args):
+                self.view.dialog.set_visible_page(self.page_build_system.view)
+
+            shortcut.set_action(Gtk.CallbackAction.new(on_shortcut_activated))
+            shortcut.set_trigger(Gtk.ShortcutTrigger.parse_string('<Alt>1'))
+            self.view.dialog.shortcut_controller.add_shortcut(shortcut)
         self.view.notebook.append_page(self.page_editor.view, Gtk.Label.new(_('_Editor')))
+        if hasattr(self.view.dialog, 'shortcut_controller'):
+            shortcut = Gtk.Shortcut()
+
+            def on_shortcut_activated(obj, args):
+                self.view.dialog.set_visible_page(self.page_editor.view)
+
+            shortcut.set_action(Gtk.CallbackAction.new(on_shortcut_activated))
+            shortcut.set_trigger(Gtk.ShortcutTrigger.parse_string('<Alt>2'))
+            self.view.dialog.shortcut_controller.add_shortcut(shortcut)
         self.view.notebook.append_page(self.page_font_color.view, Gtk.Label.new(_('_Font & Colors')))
+        if hasattr(self.view.dialog, 'shortcut_controller'):
+            shortcut = Gtk.Shortcut()
+
+            def on_shortcut_activated(obj, args):
+                self.view.dialog.set_visible_page(self.page_font_color.view)
+
+            shortcut.set_action(Gtk.CallbackAction.new(on_shortcut_activated))
+            shortcut.set_trigger(Gtk.ShortcutTrigger.parse_string('<Alt>3'))
+            self.view.dialog.shortcut_controller.add_shortcut(shortcut)
 
         self.page_build_system.init()
         self.page_editor.init()
