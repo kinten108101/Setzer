@@ -195,6 +195,7 @@ class PageFontColorView(Adw.PreferencesPage):
         scrolled_window.set_min_content_height(160)
         scrolled_window.set_propagate_natural_height(True)
         self.source_view = GtkSource.View()
+        self.source_view.set_focusable(False)
         self.source_view.get_style_context().add_class('preview_textview')
         self.source_view.set_editable(False)
         self.source_view.set_cursor_visible(False)
@@ -219,6 +220,7 @@ This is a \\textit{preview}, for $x, y \\in \\mathbb{R}: x \\leq y$ or $x > y$.
 
         self.row_preview = Adw.PreferencesRow()
         self.row_preview.set_activatable(False)
+        self.row_preview.set_focusable(False)
         self.row_preview.set_child(self.preview_wrapper)
 
         color_group = Adw.PreferencesGroup()
@@ -231,6 +233,7 @@ This is a \\textit{preview}, for $x, y \\in \\mathbb{R}: x \\leq y$ or $x > y$.
         scheme_group.add(self.style_switcher)
 
         self.option_use_custom_font = Gtk.Switch()
+        self.option_use_custom_font.set_focusable(False)
         self.option_use_custom_font.set_valign(Gtk.Align.CENTER)
 
         self.font_chooser_button = FontChooserButton(parent_window)
