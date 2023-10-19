@@ -163,7 +163,7 @@ class Shortcuts(object):
 
     def shortcut_show_open_docs(self):
         if self.main_window.headerbar.center_widget.center_button.get_sensitive():
-            self.main_window.headerbar.center_widget.center_button.activate()
+            self.main_window.headerbar.center_widget.center_button.popup()
 
     def shortcut_workspace_menu(self):
         if self.main_window.headerbar.menu_button.get_sensitive():
