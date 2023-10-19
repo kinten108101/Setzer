@@ -106,18 +106,34 @@ class PageFontColor(object):
         self.update_switchers()
         self.view.style_switcher.connect('child-activated', self.on_style_switcher_changed)
 
-        self.update_font_color_preview()
+        self.view.row_follow_mode.set_selected(
+            self.get_enum_idx_from_dict_follow_mode()
+        )
+
+        self.view.row_follow_mode.connect(
+            "notify::selected",
+            self.update_enum_from_dict_follow_mode,
+        )
 
         source_language_manager = ServiceLocator.get_source_language_manager()
         source_language = source_language_manager.get_language('latex')
         self.view.source_buffer.set_language(source_language)
-        self.update_font_color_preview()
 
         self.font_string = self.settings.get_value('preferences', 'font_string')
         self.view.font_chooser_button.set_font(self.font_string)
         self.view.font_chooser_button.connect('font_set', self.on_font_set)
         self.view.option_use_custom_font.set_active(not self.settings.get_value('preferences', 'use_system_font'))
         self.view.option_use_custom_font.connect('notify::active', self.on_use_custom_font_toggled)
+
+        style_manager = Adw.StyleManager.get_default()
+        self.on_adw_style_manager_notify_dark(style_manager)
+        style_manager.connect('notify::dark', self.on_adw_style_manager_notify_dark)
+
+    def on_adw_style_manager_notify_dark(self, object, pspec=None):
+        name = 'default'
+        if object.get_dark():
+            name = 'default-dark'
+        self.view.source_buffer.set_style_scheme(ServiceLocator.get_source_style_scheme_manager().get_scheme(name))
 
     def on_use_custom_font_toggled(self, button, pspec):
         self.settings.set_value('preferences', 'use_system_font', not button.get_active())
@@ -144,9 +160,6 @@ class PageFontColor(object):
             font_desc.set_size(24 * Pango.SCALE)
             button.set_font_desc(font_desc)
 
-        print("Setting value")
-        print(button.get_font())
-
         self.settings.set_value('preferences', 'font_string', button.get_font())
 
     def on_style_switcher_changed(self, switcher, child_widget):
@@ -154,7 +167,6 @@ class PageFontColor(object):
         value = style_scheme_preview.get_scheme().get_name()
         if value is not None:
             self.settings.set_value('preferences', 'color_scheme', value)
-            self.update_font_color_preview()
 
     def get_scheme_id_from_file(self, pathname):
         tree = ET.parse(pathname)
@@ -175,11 +187,29 @@ class PageFontColor(object):
         else:
             self.view.style_switcher.select_style('default')
 
-    def update_font_color_preview(self):
-        source_style_scheme_manager = ServiceLocator.get_source_style_scheme_manager()
-        name = self.settings.get_value('preferences', 'color_scheme')
-        source_style_scheme_light = source_style_scheme_manager.get_scheme(name)
-        self.view.source_buffer.set_style_scheme(source_style_scheme_light)
+    def get_enum_idx_from_dict_follow_mode(self):
+        val = self.settings.get_value(
+          "preferences",
+          "follow_mode",
+        )
+        options = list(self.view.dict_option_follow_mode.keys())
+        idx = -1
+        try:
+            idx = options.index(val)
+        except ValueError:
+            idx = 0
+        return idx
+
+    def update_enum_from_dict_follow_mode(self, object, selected):
+        options = list(self.view.dict_option_follow_mode.keys())
+        idx = self.view.row_follow_mode.get_selected()
+        val = None
+        try:
+            val = options[idx]
+        except IndexError:
+            print("error")
+            return
+        self.settings.set_value("preferences", "follow_mode", val)
 
 
 class PageFontColorView(Adw.PreferencesPage):
@@ -220,12 +250,31 @@ This is a \\textit{preview}, for $x, y \\in \\mathbb{R}: x \\leq y$ or $x > y$.
 
         self.row_preview = Adw.PreferencesRow()
         self.row_preview.set_activatable(False)
-        self.row_preview.set_focusable(False)
         self.row_preview.set_child(self.preview_wrapper)
+        self.row_preview.set_focusable(False)
 
         color_group = Adw.PreferencesGroup()
-        color_group.set_title(_("Colors"))
+        color_group.set_title(_("Preview"))
         color_group.add(self.row_preview)
+
+        self.dict_option_follow_mode = dict()
+        self.dict_option_follow_mode["manual"] = [_("Manually Set")]
+        self.dict_option_follow_mode["system"] = [_("Follow System")]
+
+        combo_model_follow_mode = Gtk.StringList()
+
+        for id in self.dict_option_follow_mode:
+            name = self.dict_option_follow_mode[id][0]
+            combo_model_follow_mode.append(name)
+
+        self.row_follow_mode = Adw.ComboRow()
+        self.row_follow_mode.set_title(_("_Application Style"))
+        self.row_follow_mode.set_use_underline(True)
+        self.row_follow_mode.set_model(combo_model_follow_mode)
+
+        theme_mode_group = Adw.PreferencesGroup()
+        theme_mode_group.set_title(_("Color Schemes"))
+        theme_mode_group.add(self.row_follow_mode)
 
         self.style_switcher = StyleSwitcher()
 
@@ -241,13 +290,15 @@ This is a \\textit{preview}, for $x, y \\in \\mathbb{R}: x \\leq y$ or $x > y$.
         self.font_chooser_button.add_css_class('flat')
 
         self.subrow_use_font = Adw.ActionRow()
-        self.subrow_use_font.set_title(_("Fonts"))
+        self.subrow_use_font.set_title(_("_Fonts"))
+        self.subrow_use_font.set_use_underline(True)
         self.subrow_use_font.set_subtitle(_("The font used within the editor"))
         self.subrow_use_font.add_suffix(self.font_chooser_button)
         self.subrow_use_font.set_activatable_widget(self.font_chooser_button)
 
         self.row_use_custom_font = Adw.ExpanderRow()
-        self.row_use_custom_font.set_title(_("Custom Font"))
+        self.row_use_custom_font.set_title(_("_Custom Font"))
+        self.row_use_custom_font.set_use_underline(True)
         self.row_use_custom_font.bind_property('expanded', self.option_use_custom_font, 'active', GObject.BindingFlags.BIDIRECTIONAL | GObject.BindingFlags.SYNC_CREATE)
         self.row_use_custom_font.add_action(self.option_use_custom_font)
         self.row_use_custom_font.add_row(self.subrow_use_font)
@@ -257,6 +308,7 @@ This is a \\textit{preview}, for $x, y \\in \\mathbb{R}: x \\leq y$ or $x > y$.
         font_group.add(self.row_use_custom_font)
 
         self.add(color_group)
+        self.add(theme_mode_group)
         self.add(scheme_group)
         self.add(font_group)
 

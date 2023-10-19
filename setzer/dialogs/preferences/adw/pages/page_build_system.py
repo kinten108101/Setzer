@@ -184,7 +184,8 @@ class PageBuildSystemView(Adw.PreferencesPage):
         self.combo_options_latex_interpreter = Gtk.StringList()
 
         self.latex_int_combobox = Adw.ComboRow()
-        self.latex_int_combobox.set_title(_("LaTeX Interpreter"))
+        self.latex_int_combobox.set_title(_("LaTeX _Interpreter"))
+        self.latex_int_combobox.set_use_underline(True)
         self.latex_int_combobox.set_model(self.combo_options_latex_interpreter)
 
         self.no_interpreter_label = Gtk.Label()
@@ -216,7 +217,8 @@ class PageBuildSystemView(Adw.PreferencesPage):
         self.option_cleanup_build_files.set_valign(Gtk.Align.CENTER)
 
         self.row_cleanup_build_files = Adw.ActionRow()
-        self.row_cleanup_build_files.set_title(_("Cleanup After Building"))
+        self.row_cleanup_build_files.set_title(_("_Cleanup After Building"))
+        self.row_cleanup_build_files.set_use_underline(True)
         self.row_cleanup_build_files.set_subtitle(
           _("Automatically remove helper files (.log, .dvi, …) after building .pdf."),
         )
@@ -228,7 +230,9 @@ class PageBuildSystemView(Adw.PreferencesPage):
         self.option_use_latexmk.set_valign(Gtk.Align.CENTER)
 
         self.row_use_latexmk = Adw.ActionRow()
-        self.row_use_latexmk.set_title(_("Use Latexmk"))
+        self.row_use_latexmk.set_title(_("Use _Latexmk"))
+        self.row_use_latexmk.set_use_underline(True)
+        self.row_use_latexmk.set_subtitle(_("Latexmk is a tool that automates LaTeX document generation. It watches all source files and reruns LaTeX whenever a file has changed."))
         self.row_use_latexmk.add_suffix(self.option_use_latexmk)
         self.row_use_latexmk.set_activatable_widget(self.option_use_latexmk)
 
@@ -249,7 +253,8 @@ class PageBuildSystemView(Adw.PreferencesPage):
             self.option_autoshow_build_log.append(name)
 
         self.row_autoshow_build_log = Adw.ComboRow()
-        self.row_autoshow_build_log.set_title(_("Show Build Log"))
+        self.row_autoshow_build_log.set_title(_("Show Build _Log"))
+        self.row_autoshow_build_log.set_use_underline(True)
         self.row_autoshow_build_log.set_model(self.option_autoshow_build_log)
 
         self._options_system_commands = dict()
@@ -263,7 +268,8 @@ class PageBuildSystemView(Adw.PreferencesPage):
             self.option_system_commands.append(name)
 
         self.row_system_commands = Adw.ComboRow()
-        self.row_system_commands.set_title(_("Embedded System Commands"))
+        self.row_system_commands.set_title(_("Embedded _System Commands"))
+        self.row_system_commands.set_use_underline(True)
         self.row_system_commands.set_subtitle(
           _("Enable this only if you have to. It can cause security problems when building files from untrusted sources."),
         )

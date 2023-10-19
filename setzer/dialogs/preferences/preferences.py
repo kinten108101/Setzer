@@ -52,9 +52,9 @@ class PreferencesDialog(object):
         self.page_editor = page_editor.PageEditor(self, self.settings)
         self.page_font_color = page_font_color.PageFontColor(self, self.settings, self.main_window)
 
-        self.view.notebook.append_page(self.page_build_system.view, Gtk.Label.new(_('Build System')))
-        self.view.notebook.append_page(self.page_editor.view, Gtk.Label.new(_('Editor')))
-        self.view.notebook.append_page(self.page_font_color.view, Gtk.Label.new(_('Font & Colors')))
+        self.view.notebook.append_page(self.page_build_system.view, Gtk.Label.new(_('_Build System')))
+        self.view.notebook.append_page(self.page_editor.view, Gtk.Label.new(_('_Editor')))
+        self.view.notebook.append_page(self.page_font_color.view, Gtk.Label.new(_('_Font & Colors')))
 
         self.page_build_system.init()
         self.page_editor.init()
