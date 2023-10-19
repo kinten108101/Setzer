@@ -118,7 +118,7 @@ class PageEditorView(Adw.PreferencesPage):
         self.row_space_tab.set_model(combo_model_space_tab)
 
         self.tab_width_spinbutton = Gtk.SpinButton.new_with_range(1, 8, 1)
-        self.tab_width_spinbutton.set_focusable(False)
+        self.tab_width_spinbutton.set_can_focus(False)
         self.tab_width_spinbutton.set_valign(Gtk.Align.CENTER)
 
         self.row_tab_width = Adw.ActionRow()
@@ -134,7 +134,7 @@ class PageEditorView(Adw.PreferencesPage):
         tab_stop_group.add(self.row_tab_width)
 
         self.option_show_line_numbers = Gtk.Switch()
-        self.option_show_line_numbers.set_focusable(False)
+        self.option_show_line_numbers.set_can_focus(False)
         self.option_show_line_numbers.set_valign(Gtk.Align.CENTER)
 
         self.row_show_line_numbers = Adw.ActionRow()
@@ -149,7 +149,7 @@ class PageEditorView(Adw.PreferencesPage):
         line_numbers_group.add(self.row_show_line_numbers)
 
         self.option_line_wrapping = Gtk.Switch()
-        self.option_line_wrapping.set_focusable(False)
+        self.option_line_wrapping.set_can_focus(False)
         self.option_line_wrapping.set_valign(Gtk.Align.CENTER)
 
         self.row_line_wrapping = Adw.ActionRow()
@@ -164,7 +164,7 @@ class PageEditorView(Adw.PreferencesPage):
         line_wrapping_group.add(self.row_line_wrapping)
 
         self.option_code_folding = Gtk.Switch()
-        self.option_code_folding.set_focusable(False)
+        self.option_code_folding.set_can_focus(False)
         self.option_code_folding.set_valign(Gtk.Align.CENTER)
 
         self.row_code_folding = Adw.ActionRow()
@@ -179,7 +179,7 @@ class PageEditorView(Adw.PreferencesPage):
         code_folding_group.add(self.row_code_folding)
 
         self.option_highlight_current_line = Gtk.Switch()
-        self.option_highlight_current_line.set_focusable(False)
+        self.option_highlight_current_line.set_can_focus(False)
         self.option_highlight_current_line.set_valign(Gtk.Align.CENTER)
 
         self.row_highlight_current_line = Adw.ActionRow()
@@ -190,7 +190,7 @@ class PageEditorView(Adw.PreferencesPage):
         self.row_highlight_current_line.set_activatable_widget(self.option_highlight_current_line)
 
         self.option_highlight_matching_brackets = Gtk.Switch()
-        self.option_highlight_matching_brackets.set_focusable(False)
+        self.option_highlight_matching_brackets.set_can_focus(False)
         self.option_highlight_matching_brackets.set_valign(Gtk.Align.CENTER)
 
         self.row_highlight_matching_brackets = Adw.ActionRow()

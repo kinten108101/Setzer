@@ -213,7 +213,7 @@ class PageBuildSystemView(Adw.PreferencesPage):
         first_group.add(self.tectonic_warning_label)
 
         self.option_cleanup_build_files = Gtk.Switch()
-        self.option_cleanup_build_files.set_focusable(False)
+        self.option_cleanup_build_files.set_can_focus(False)
         self.option_cleanup_build_files.set_valign(Gtk.Align.CENTER)
 
         self.row_cleanup_build_files = Adw.ActionRow()
@@ -226,7 +226,7 @@ class PageBuildSystemView(Adw.PreferencesPage):
         self.row_cleanup_build_files.set_activatable_widget(self.option_cleanup_build_files)
 
         self.option_use_latexmk = Gtk.Switch()
-        self.option_use_latexmk.set_focusable(False)
+        self.option_use_latexmk.set_can_focus(False)
         self.option_use_latexmk.set_valign(Gtk.Align.CENTER)
 
         self.row_use_latexmk = Adw.ActionRow()
