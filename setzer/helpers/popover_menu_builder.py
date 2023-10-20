@@ -20,6 +20,62 @@ gi.require_version('Gtk', '4.0')
 from gi.repository import Gtk
 from gi.repository import GLib
 from gi.repository import Gio
+from setzer.app.service_locator import ServiceLocator
+
+
+class MenuItemTest(Gio.MenuItem):
+
+    def set_detailed_action(self, name):
+        super().set_detailed_action(name)
+        if hasattr(self, 'reload'):
+            self.reload()
+
+    def connect(self, signal, callback):
+        if signal == 'clicked':
+            name = 'menu.' + str(generate_id())
+            print('MenuItemTest::connect::clicked: ' + name)
+            action = Gio.SimpleAction.new(name, None)
+
+            def on_action_activate(self, action):
+                callback(self)
+
+            action.connect('activate', on_action_activate)
+            ServiceLocator.get_main_window().app.add_action(action)
+            detailed_name = 'app.' + name
+            self.set_detailed_action(detailed_name)
+
+
+class MenuTest(Gio.Menu):
+
+    def __init__(self):
+        super().__init__()
+        self.item_map = dict()
+        self.count = 0
+
+    def reload_menuitem(self, menuitem):
+        idx = self.item_map[menuitem]
+        self.remove(idx)
+        self.insert_item(idx, menuitem)
+
+    def insert_item(self, pos, menuitem):
+        super().insert_item(pos, menuitem)
+
+        def _reload(_self=None):
+            self.reload_menuitem(menuitem)
+
+        menuitem.reload = _reload
+        self.item_map[menuitem] = pos
+        self.count += 1
+
+    def append_item(self, menuitem):
+        super().append_item(menuitem)
+
+        def _reload(_self=None):
+            self.reload_menuitem(menuitem)
+
+        menuitem.reload = _reload
+        self.item_map[menuitem] = self.count
+        self.count += 1
 
 
 class PopoverMenuTest(Gtk.PopoverMenu):
@@ -73,19 +129,19 @@ class MenuBuilderTest():
         return menu
 
     def create_button(label, icon_name=None, shortcut=None):
-        item = Gio.MenuItem()
+        item = MenuItemTest()
         if (label != None): item.set_label(label)
         if (icon_name != None): item.set_icon_name(icon_name)
         return item
 
     def create_menu_button(label):
-        item = Gio.MenuItem()
+        item = MenuItemTest()
         if (label != None): item.set_label(label)
         return item
 
     def add_page(menu, pagename, label):
-        model = Gio.Menu()
-        current_section = Gio.Menu()
+        model = MenuTest()
+        current_section = MenuTest()
         model.append_section(None, current_section)
         menu.page_map[pagename] = (model, current_section)
 
@@ -105,7 +161,7 @@ class MenuBuilderTest():
         page = menu.page_map.get(pagename)
         assert page is not None
         current_section = page[1]
-        item = Gio.MenuItem()
+        item = MenuItemTest()
         id = str(generate_id())
         item.set_attribute_value('custom', GLib.Variant('s', id))
         current_section.append_item(item)
@@ -115,7 +171,7 @@ class MenuBuilderTest():
         page = menu.page_map[pagename]
         assert page is not None
         model = page[0]
-        new_section = Gio.Menu()
+        new_section = MenuTest()
         model.append_section(None, new_section)
         menu.page_map[pagename] = (model, new_section)
 
