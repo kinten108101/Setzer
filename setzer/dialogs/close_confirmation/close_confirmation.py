@@ -21,7 +21,7 @@ gi.require_version('Gtk', '4.0')
 from gi.repository import Gtk
 
 import os.path
-from setzer.dialogs.close_confirmation.adw.message_dialog import AdaptedAdwMessageDialog as MessageDialog
+from setzer.dialogs.close_confirmation.close_confirmation_adw_viewgtk import CloseConfirmationView
 
 
 class CloseConfirmationDialog(object):
@@ -94,42 +94,4 @@ class CloseConfirmationDialog(object):
         del(self.view)
 
     def setup(self, documents):
-        self.view = MessageDialog()
-        self.view.set_transient_for(self.main_window)
-        self.view.set_modal(True)
-        self.view.set_property('message-type', Gtk.MessageType.QUESTION)
-
-        if len(documents) == 1:
-            self.view.set_property('text', _('Document »{document}« has unsaved changes.').format(document=documents[0].get_displayname()))
-            self.view.set_property('secondary-text', _('If you close without saving, these changes will be lost.'))
-
-        if len(documents) >= 2:
-            self.view.set_property('text', _('There are {amount} documents with unsaved changes.\nSave changes before closing?').format(amount=str(len(documents))))
-            self.view.set_property('secondary-text', _('Select the documents you want to save:'))
-            self.view.get_message_area().get_first_child().set_xalign(0)
-
-            scrolled_window = Gtk.ScrolledWindow()
-            scrolled_window.set_size_request(446, 112)
-            scrolled_window.get_style_context().add_class('close-confirmation-list')
-            self.chooser = Gtk.ListBox()
-            self.chooser.set_selection_mode(Gtk.SelectionMode.NONE)
-            self.chooser.set_can_focus(False)
-            counter = 0
-            for document in documents:
-                button = Gtk.CheckButton.new_with_label(document.get_displayname())
-                button.set_name('document_to_save_checkbutton_' + str(counter))
-                button.set_active(True)
-                button.set_can_focus(False)
-                self.chooser.append(button)
-                counter += 1
-            scrolled_window.set_child(self.chooser)
-                
-            secondary_text_label = Gtk.Label.new(_('If you close without saving, all changes will be lost.'))
-            message_area = self.view.get_message_area()
-            message_area.append(scrolled_window)
-            message_area.append(secondary_text_label)
-
-        self.view.add_buttons(_('_Cancel'), Gtk.ResponseType.CANCEL, _('_Discard All'), Gtk.ResponseType.NO, _('_Save'), Gtk.ResponseType.YES)
-        self.view.set_default_response(Gtk.ResponseType.YES)
-
-
+        self.view, self.chooser = CloseConfirmationView(documents, self.main_window)
