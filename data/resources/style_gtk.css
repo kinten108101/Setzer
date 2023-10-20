@@ -710,4 +710,15 @@ label.bibtex-wizard-header {
     padding-bottom: 6px;
 }
 
-
+window.close-confirmation-dialog > windowhandle > box.vertical > box.message-area.vertical {
+  padding-bottom: 0;
+}
+window.close-confirmation-dialog > windowhandle > box.vertical > box.message-area.vertical > preferencespage {
+  margin-left: -30px;
+  margin-right: -30px;
+}
+window.close-confirmation-dialog > windowhandle > box.vertical > box.message-area.vertical > preferencespage > scrolledwindow > viewport {
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 10px;
+}
