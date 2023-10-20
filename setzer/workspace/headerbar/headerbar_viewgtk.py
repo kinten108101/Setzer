@@ -120,6 +120,8 @@ class HeaderBar(Gtk.HeaderBar):
         self.center_widget = document_switcher_viewgtk.OpenDocsButton()
         self.set_title_widget(self.center_widget)
 
+        self.update_actions()
+
     def insert_workspace_menu(self):
         self.hamburger_popover = MenuBuilderTest.create_menu()
 
