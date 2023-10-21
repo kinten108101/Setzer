@@ -67,6 +67,7 @@ class Shortcuts(object):
             ('<Control>x', 'win.cut'),
             ('<Control>c', 'win.copy'),
             ('<Control>v', 'win.paste'),
+            ('<Control>a', 'win.select-all'),
             ('F5', 'win.save-and-build'),
             ('F6', 'win.build'),
             ('F7', 'win.forward-sync'),
