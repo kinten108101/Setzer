@@ -30,19 +30,31 @@ class MenuItemTest(Gio.MenuItem):
         if hasattr(self, 'reload'):
             self.reload()
 
-    def connect(self, signal, callback):
+    def set_action_name(self, name):
+        self.set_detailed_action(name)
+
+    def set_icon_name(self, name):
+        pass
+
+    def connect(self, signal, callback, *args):
         if signal == 'clicked':
+            self.connect_clicked(callback, *args)
+
+    def connect_clicked(self, callback, *args):
+        if not hasattr(self, 'callbacks'):
+            self.callbacks = list()
             name = 'menu.' + str(generate_id())
             print('MenuItemTest::connect::clicked: ' + name)
             action = Gio.SimpleAction.new(name, None)
-
-            def on_action_activate(self, action):
-                callback(self)
-
-            action.connect('activate', on_action_activate)
+            action.connect('activate', self.on_stateless_action_activate, *args)
             ServiceLocator.get_main_window().app.add_action(action)
             detailed_name = 'app.' + name
             self.set_detailed_action(detailed_name)
+        self.callbacks.append(callback)
+
+    def on_stateless_action_activate(self, action, *args):
+        for fn in self.callbacks:
+            fn(*args)
 
 
 class MenuTest(Gio.Menu):
