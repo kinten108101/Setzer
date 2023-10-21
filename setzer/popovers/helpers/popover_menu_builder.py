@@ -154,6 +154,15 @@ class MenuBuilderTest():
         if (icon_name != None): item.set_icon_name(icon_name)
         return item
 
+    def create_button_widget(label, icon_name=None, shortcut=None):
+        item = Gtk.Button()
+        item.get_style_context().add_class('flat')
+        if label is not None:
+            item.set_label(label)
+        if icon_name is not None:
+            item.set_icon_name(icon_name)
+        return item
+
     def create_menu_button(label):
         item = MenuItemTest()
         if (label != None): item.set_label(label)
