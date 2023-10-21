@@ -30,19 +30,31 @@ class MenuItemTest(Gio.MenuItem):
         if hasattr(self, 'reload'):
             self.reload()
 
-    def connect(self, signal, callback):
+    def set_action_name(self, name):
+        self.set_detailed_action(name)
+
+    def set_icon_name(self, name):
+        pass
+
+    def connect(self, signal, callback, *args):
         if signal == 'clicked':
+            self.connect_clicked(callback, *args)
+
+    def connect_clicked(self, callback, *args):
+        if not hasattr(self, 'callbacks'):
+            self.callbacks = list()
             name = 'menu.' + str(generate_id())
             print('MenuItemTest::connect::clicked: ' + name)
             action = Gio.SimpleAction.new(name, None)
-
-            def on_action_activate(self, action):
-                callback(self)
-
-            action.connect('activate', on_action_activate)
+            action.connect('activate', self.on_stateless_action_activate, *args)
             ServiceLocator.get_main_window().app.add_action(action)
             detailed_name = 'app.' + name
             self.set_detailed_action(detailed_name)
+        self.callbacks.append(callback)
+
+    def on_stateless_action_activate(self, action, *args):
+        for fn in self.callbacks:
+            fn(*args)
 
 
 class MenuTest(Gio.Menu):
@@ -146,6 +158,15 @@ class MenuBuilderTest():
         if (icon_name != None): item.set_icon_name(icon_name)
         return item
 
+    def create_button_widget(label, icon_name=None, shortcut=None):
+        item = Gtk.Button()
+        item.get_style_context().add_class('flat')
+        if label is not None:
+            item.set_label(label)
+        if icon_name is not None:
+            item.set_icon_name(icon_name)
+        return item
+
     def create_menu_button(label):
         item = MenuItemTest()
         if (label != None): item.set_label(label)
@@ -168,6 +189,12 @@ class MenuBuilderTest():
         assert page is not None
         current_section = page[1]
         current_section.append_item(item)
+
+    def add_widget(menu, widget, pagename='main'):
+        if isinstance(widget, Gio.MenuItem):
+            return MenuBuilderTest.add_item(menu, widget, pagename)
+        else:
+            return MenuBuilderTest.add_custom_widget(menu, widget, pagename)
 
     def add_custom_widget(menu, widget, pagename='main'):
         page = menu.page_map.get(pagename)
