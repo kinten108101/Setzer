@@ -368,9 +368,6 @@ popover.menu-own-quotes-symbolic {
 ** preview
 */
 
-box.preview scrolledwindow {
-    background-color: @view_bg_color;
-}
 box.preview > box {
     background-color: @view_bg_color;
     border-bottom: 1px solid @lighter_border;
