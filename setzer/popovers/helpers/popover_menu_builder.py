@@ -177,6 +177,12 @@ class MenuBuilderTest():
         current_section = page[1]
         current_section.append_item(item)
 
+    def add_widget(menu, widget, pagename='main'):
+        if isinstance(widget, Gio.MenuItem):
+            return MenuBuilderTest.add_item(menu, widget, pagename)
+        else:
+            return MenuBuilderTest.add_custom_widget(menu, widget, pagename)
+
     def add_custom_widget(menu, widget, pagename='main'):
         page = menu.page_map.get(pagename)
         assert page is not None
