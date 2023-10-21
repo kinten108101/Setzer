@@ -21,7 +21,7 @@ from gi.repository import Gdk, Gtk, Pango
 
 from setzer.app.service_locator import ServiceLocator
 from setzer.app.font_manager import FontManager
-from setzer.helpers.popover_menu_builder import MenuBuilder
+from setzer.helpers.popover_menu_builder import MenuBuilderTest as MenuBuilder
 
 
 class ContextMenu(object):
@@ -104,17 +104,18 @@ class ContextMenu(object):
         zoom_label.set_margin_start(10)
         box.set_start_widget(zoom_label)
         inner_box = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 0)
+        inner_box.get_style_context().add_class('linked')
         
-        self.dynamic_buttons[popover]['zoom_out'] = MenuBuilder.create_button('', shortcut=None)
+        self.dynamic_buttons[popover]['zoom_out'] = MenuBuilder.create_button_widget('', shortcut=None)
         self.dynamic_buttons[popover]['zoom_out'].set_icon_name('value-decrease-symbolic')
         self.dynamic_buttons[popover]['zoom_out'].set_action_name('win.zoom-out')
         inner_box.append(self.dynamic_buttons[popover]['zoom_out'])
-        self.dynamic_buttons[popover]['reset_zoom'] = MenuBuilder.create_button('', shortcut=None)
+        self.dynamic_buttons[popover]['reset_zoom'] = MenuBuilder.create_button_widget('', shortcut=None)
         self.dynamic_buttons[popover]['reset_zoom'].set_label('100%')
         self.dynamic_buttons[popover]['reset_zoom'].set_action_name('win.reset-zoom')
         self.dynamic_buttons[popover]['reset_zoom'].set_size_request(53, -1)
         inner_box.append(self.dynamic_buttons[popover]['reset_zoom'])
-        self.dynamic_buttons[popover]['zoom_in'] = MenuBuilder.create_button('', shortcut=None)
+        self.dynamic_buttons[popover]['zoom_in'] = MenuBuilder.create_button_widget('', shortcut=None)
         self.dynamic_buttons[popover]['zoom_in'].set_icon_name('value-increase-symbolic')
         self.dynamic_buttons[popover]['zoom_in'].set_action_name('win.zoom-in')
         inner_box.append(self.dynamic_buttons[popover]['zoom_in'])
@@ -124,7 +125,6 @@ class ContextMenu(object):
     def create_button(self, label, action_name, shortcut=None):
         button = MenuBuilder.create_button(label, shortcut=shortcut)
         button.set_action_name(action_name)
-        button.connect('clicked', self.on_menu_button_click, self.current_popover)
         return button
 
     def popup_at_cursor(self, x, y):
