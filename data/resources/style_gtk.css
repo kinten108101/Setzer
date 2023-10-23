@@ -23,10 +23,12 @@ box.welcome {
     margin-left: 150px;
     margin-right: 150px;
     margin-bottom: 150px;
+    background: radial-gradient(@window_bg_color 10%, @window_bg_color 30%, transparent 50%) -75px 0px, radial-gradient(@window_bg_color 10%, @window_bg_color 30%, transparent 50%) 75px 0px;
 }
 label.welcome-header {
     font-size: 32pt;
     padding-bottom: 18px;
+    font-weight: 200;
 }
 label.welcome-description {
 }
@@ -56,82 +58,34 @@ popover.documentchooser box.not_found label {
     opacity: 0.65;
 }
 
-/*
-** open documents adw
-*/
-
-/* popover */
-.documentchooser_adw contents {
-  padding: 0;
-  margin: 0;
-}
-
-.documentchooser_adw listview {
-  margin-top: 0px;
-}
-
-.documentchooser_adw separator {
-    margin-bottom: 0px;
-}
-
-.documentchooser_adw .navigation-sidebar row {
-  margin-left: 0;
-  margin-right: 0;
-  padding: 4px 8px 4px 16px;
-}
-
-.documentchooser_adw .navigation-sidebar row:not(:first-child) {
-  margin-top: 4px;
-}
-
-.documentchooser_adw .navigation-sidebar row:active {
-  background-color: alpha(currentColor, 0.05);
-}
-
-.documentchooser_adw .file_name {
-  font-size: medium;
-}
-
-.documentchooser_adw .file_path {
-  font-size: small;
-}
-
-.documentchooser_adw .empty_page_content {
-  margin: 16px;
-}
-
-.documentchooser_adw .noresult_content {
-  margin: 16px;
-}
-
 /* 
 ** tab switching
 */
 
 .open-docs-popover-button {
     margin: 0px;
+    padding: 0px;
 }
-.open-docs-popover-button .title {
-    padding: 0;
-}
-.open-docs-popover-button .title.has-subtitle {
-    margin-top: -8px;
-}
-.open-docs-popover-button .title.mod-mark {
-    font-weight: 400;
-    margin-right: 6px;
-}
-.open-docs-popover-button .subtitle {
+.open-docs-popover-button > button {
+    margin: 0px;
+    padding-left: 8px;
+    padding-right: 18px;
+    border-radius: 0px;
+    box-shadow: none;
+    transition: none;
+    text-shadow: none;
     font-weight: normal;
-    margin-top: -4px;
-    margin-bottom: -4px;
+}
+.open-docs-popover-button > button:hover:not(:checked):not(:active) {
+}
+.open-docs-popover-button > button:checked, .open-docs-popover-button > button:active {
 }
 .open-docs-popover list,
 .open-docs-popover row:not(:hover):not(:selected) {
-    background-color: @view_bg_color;
+    
 }
 .open-docs-popover row:hover:not(:active):not(:selected) {
-    background-color: @view_hover_color;
+    
 }
 .open-docs-popover scrollbar slider {
     min-height: 12px;
@@ -139,7 +93,7 @@ popover.documentchooser box.not_found label {
 .open-docs-popover row {
     border-radius: 6px;
     padding: 5px 5px 5px 8px;
-    color: @view_fg_color;
+    
 }
 .open-docs-popover list {
     padding: 0px;
@@ -221,35 +175,35 @@ box.buildlog > box button {
 ** popover menus
 */
 
-popover arrow {
+popover.legacy arrow {
     background: @window_bg_color;
 }
-popover contents {
-    background: @window_bg_color;
+popover.legacy contents {
+    background: @window_bg_color;  
 }
-popover button.action, popover button.menu, popover button.header {
+popover.legacy button.action, popover button.menu, popover button.header {
     background: none;
     font-weight: normal;
 }
-popover button.action:hover, popover button.menu:hover, popover button.header:hover {
+popover.legacy button.action:hover, popover button.menu:hover, popover button.header:hover {
     background: @view_hover_color;
 }
-popover button.action:active, popover button.action:focus, popover button.menu:active, popover button.menu:focus, popover button.header:active, popover button.header:focus {
+popover.legacy button.action:active, popover button.action:focus, popover button.menu:active, popover button.menu:focus, popover button.header:active, popover button.header:focus {
     background: @borders;
 }
-popover button label.shortcut {
+popover.legacy button label.shortcut {
     color: @menu_shortcut_color;
     margin-left: 18px;
 }
-popover separator {
+popover.legacy separator {
     margin: 6px 0px;
 }
-popover label.explaination {
+popover.legacy label.explaination {
     margin: 0px 10px;
     color: @description_color;
     font-size: 13px;
 }
-popover label.explaination-header {
+popover.legacy label.explaination-header {
     margin: 0px 10px;
     font-weight: bold;
 }
@@ -368,6 +322,9 @@ popover.menu-own-quotes-symbolic {
 ** preview
 */
 
+box.preview scrolledwindow {
+    background-color: @view_bg_color;
+}
 box.preview > box {
     background-color: @view_bg_color;
     border-bottom: 1px solid @lighter_border;
@@ -385,12 +342,10 @@ box.preview button.scbar, box.preview .scbar > button {
     border: 1px solid @borders;
     border-radius: 3px;
     font-weight: normal;
-    font-size: 16px;
 }
 .paging-widget {
     padding-top: 9px;
     padding-left: 9px;
-    font-size: 16px;
 }
 label.target-label {
     border-top: 1px solid @borders;
@@ -524,42 +479,6 @@ box.preferences-page GtkSourceStyleSchemePreview image {
     padding: 2px;
     margin: 4px;
 }
-
-/*
-** adw-preferences
-*/
-
-.adw-preferences-page flowboxchild {
-    border: 2px solid @borders;
-    border-radius: 12px;
-    padding: 0px;
-    margin-right: 6px;
-    box-shadow: 0 0 0 1px alpha(black, 0.03),
-              0 1px 3px 1px alpha(black, .07),
-              0 2px 6px 2px alpha(black, .03);
-}
-.adw-preferences-page flowboxchild:selected {
-    border: 2px solid @accent_bg_color;
-}
-.adw-preferences-page GtkSourceStyleSchemePreview textview {
-    border-radius: 12px;
-    padding: 0px;
-    margin: 0px;
-}
-.adw-preferences-page GtkSourceStyleSchemePreview image {
-    background: @accent_bg_color;
-    color: @accent_fg_color;
-    border-radius: 12px;
-    padding: 2px;
-    margin: 4px;
-}
-.adw-preferences-page .preview scrolledwindow {
-    border-radius: 12px;
-}
-.adw-preferences-page textview.preview_textview {
-    border-radius: 12px;
-}
-
 
 /*
 ** document wizard
@@ -705,15 +624,4 @@ label.bibtex-wizard-header {
     padding-bottom: 6px;
 }
 
-window.close-confirmation-dialog > windowhandle > box.vertical > box.message-area.vertical {
-  padding-bottom: 0;
-}
-window.close-confirmation-dialog > windowhandle > box.vertical > box.message-area.vertical > preferencespage {
-  margin-left: -30px;
-  margin-right: -30px;
-}
-window.close-confirmation-dialog > windowhandle > box.vertical > box.message-area.vertical > preferencespage > scrolledwindow > viewport {
-  padding-left: 30px;
-  padding-right: 30px;
-  padding-bottom: 10px;
-}
+

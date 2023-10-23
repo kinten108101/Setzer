@@ -1,3 +1,4 @@
+@define-color view_hover_color rgba(255, 255, 255, 0.07);
 /* Setzer-Specific */
 @define-color code_folding_hover rgba(255, 255, 255, 0.5);
 @define-color fg_color_light mix(@view_fg_color, transparent, 0.5);
