@@ -21,7 +21,7 @@ from gi.repository import Gdk, Gtk, Pango
 
 from setzer.app.service_locator import ServiceLocator
 from setzer.app.font_manager import FontManager
-from setzer.helpers.popover_menu_builder import MenuBuilderTest as MenuBuilder
+from setzer.helpers.popover_gmenu_builder import MenuBuilder
 
 
 class ContextMenu(object):
