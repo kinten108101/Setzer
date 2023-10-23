@@ -22,7 +22,7 @@ from gi.repository import Adw, Gdk, Gtk
 
 import setzer.workspace.build_log.build_log_viewgtk as build_log_view
 import setzer.workspace.headerbar.headerbar_viewgtk as headerbar_view
-import setzer.workspace.shortcutsbar.latex_shortcutsbar.latex_shortcutsbar_viewgtk as latex_shortcutsbar_view
+import setzer.workspace.shortcutsbar.latex_shortcutsbar.latex_shortcutsbar_adw_viewgtk as latex_shortcutsbar_view
 import setzer.workspace.shortcutsbar.bibtex_shortcutsbar.bibtex_shortcutsbar_viewgtk as bibtex_shortcutsbar_view
 import setzer.workspace.shortcutsbar.others_shortcutsbar.others_shortcutsbar_viewgtk as others_shortcutsbar_view
 import setzer.workspace.preview_panel.preview_panel_viewgtk as preview_panel_view
