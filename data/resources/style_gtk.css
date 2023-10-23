@@ -175,35 +175,35 @@ box.buildlog > box button {
 ** popover menus
 */
 
-popover arrow {
-    
+popover.legacy arrow {
+    background: @window_bg_color;
 }
-popover contents {
-    
+popover.legacy contents {
+    background: @window_bg_color;  
 }
-popover button.action, popover button.menu, popover button.header {
+popover.legacy button.action, popover button.menu, popover button.header {
     background: none;
     font-weight: normal;
 }
-popover button.action:hover, popover button.menu:hover, popover button.header:hover {
-    
+popover.legacy button.action:hover, popover button.menu:hover, popover button.header:hover {
+    background: @view_hover_color;
 }
-popover button.action:active, popover button.action:focus, popover button.menu:active, popover button.menu:focus, popover button.header:active, popover button.header:focus {
-    
+popover.legacy button.action:active, popover button.action:focus, popover button.menu:active, popover button.menu:focus, popover button.header:active, popover button.header:focus {
+    background: @borders;
 }
-popover button label.shortcut {
-    
+popover.legacy button label.shortcut {
+    color: @menu_shortcut_color;
     margin-left: 18px;
 }
-popover separator {
+popover.legacy separator {
     margin: 6px 0px;
 }
-popover label.explaination {
+popover.legacy label.explaination {
     margin: 0px 10px;
     color: @description_color;
     font-size: 13px;
 }
-popover label.explaination-header {
+popover.legacy label.explaination-header {
     margin: 0px 10px;
     font-weight: bold;
 }
