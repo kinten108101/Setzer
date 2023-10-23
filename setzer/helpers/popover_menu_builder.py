@@ -18,15 +18,12 @@
 import gi
 gi.require_version('Gtk', '4.0')
 from gi.repository import Gtk
-from gi.repository import GLib
-from gi.repository import Gio
 
 
 class PopoverMenu(Gtk.Popover):
 
     def __init__(self):
         Gtk.Popover.__init__(self)
-        self.get_style_context().add_class('legacy')
 
         stack = Gtk.Stack()
         stack.set_vhomogeneous(False)
