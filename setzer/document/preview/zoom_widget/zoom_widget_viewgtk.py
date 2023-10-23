@@ -20,7 +20,7 @@ gi.require_version('Gtk', '4.0')
 from gi.repository import Gtk
 
 from setzer.widgets.fixed_width_label.fixed_width_label import FixedWidthLabel
-from setzer.helpers.popover_menu_builder import MenuBuilderTest as MenuBuilder
+from setzer.helpers.popover_gmenu_builder import MenuBuilder
 
 
 class PreviewZoomWidget(Gtk.Revealer):
