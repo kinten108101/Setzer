@@ -20,6 +20,7 @@ gi.require_version('Gtk', '4.0')
 from gi.repository import Gtk
 from gi.repository import GLib
 from gi.repository import Gio
+from gi.repository import Pango
 
 import setzer.workspace.document_switcher.document_switcher_viewgtk as document_switcher_viewgtk
 import setzer.workspace.document_chooser.document_chooser_viewgtk as document_chooser_viewgtk
@@ -56,13 +57,11 @@ class HeaderBar(Gtk.HeaderBar):
         self.open_document_blank_button.set_action_name('win.open-document-dialog')
 
         self.document_chooser = document_chooser_viewgtk.DocumentChooser()
-        self.open_document_button_label = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 6)
-        self.open_document_button_label.append(Gtk.Label.new(_('Open')))
-        self.open_document_button_label.append(Gtk.Image.new_from_icon_name('pan-down-symbolic'))
         self.open_document_button = Gtk.MenuButton()
+        self.open_document_button.set_always_show_arrow(True)
+        self.open_document_button.set_label(_('Open'))
         self.open_document_button.get_style_context().add_class('flat')
         self.open_document_button.set_tooltip_text(_('Open a document') + ' (' + _('Shift') + '+' + _('Ctrl') + '+O)')
-        self.open_document_button.set_child(self.open_document_button_label)
         self.open_document_button.set_popover(self.document_chooser)
 
         # new document buttons
@@ -70,16 +69,13 @@ class HeaderBar(Gtk.HeaderBar):
         self.button_bibtex = MenuBuilder.create_button(_('New BibTeX Document'))
 
         self.new_document_popover = MenuBuilder.create_menu()
-
+        
         MenuBuilder.add_widget(self.new_document_popover, self.button_latex)
         MenuBuilder.add_widget(self.new_document_popover, self.button_bibtex)
 
-        box = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 6)
-        box.append(Gtk.Image.new_from_icon_name('document-new-symbolic'))
-        box.append(Gtk.Image.new_from_icon_name('pan-down-symbolic'))
-
         self.new_document_button = Gtk.MenuButton()
-        self.new_document_button.set_child(box)
+        self.new_document_button.set_always_show_arrow(True)
+        self.new_document_button.set_icon_name('document-new-symbolic')
         self.new_document_button.set_can_focus(False)
         self.new_document_button.set_tooltip_text(_('Create a new document'))
         self.new_document_button.get_style_context().add_class('new-document-menu-button')
@@ -167,10 +163,13 @@ class HeaderBar(Gtk.HeaderBar):
         MenuBuilder.add_page(self.hamburger_popover, 'session', _('Session'))
 
         self.session_explaination = Gtk.Label.new(_('Save the list of open documents in a session file\nand restore it later, a convenient way to work\non multiple projects.'))
+        self.session_explaination.get_style_context().add_class('caption')
+        self.session_explaination.get_style_context().add_class('dim-label')
         self.session_explaination.set_xalign(0)
-        self.session_explaination.get_style_context().add_class('explaination')
-        self.session_explaination.set_margin_top(8)
-        self.session_explaination.set_margin_bottom(11)
+        self.session_explaination.set_margin_start(13)  # magic number so that text aligns with menu button label's baseline
+        self.session_explaination.set_margin_top(4)
+        self.session_explaination.set_margin_bottom(4)
+        self.session_explaination.set_wrap_mode(Pango.WrapMode.WORD_CHAR)
 
         self.button_restore_session = MenuBuilder.create_button(_('Restore Previous Session') + '...')
         self.button_save_session = MenuBuilder.create_button(_('Save Current Session') + '...')
