@@ -46,6 +46,7 @@ class DocumentChooser(Gtk.Popover):
 
         vvbox = Gtk.Box()
         vvbox.set_orientation(Gtk.Orientation.VERTICAL)
+        vvbox.set_spacing(6)
 
         tophbox = Gtk.Box()
         tophbox.set_spacing(6)
