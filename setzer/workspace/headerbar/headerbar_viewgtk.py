@@ -71,9 +71,6 @@ class HeaderBar(Gtk.HeaderBar):
 
         self.new_document_popover = MenuBuilder.create_menu()
 
-        MenuBuilder.add_widget(self.new_document_popover, self.button_latex)
-        MenuBuilder.add_widget(self.new_document_popover, self.button_bibtex)
-
         self.new_document_button = Gtk.MenuButton()
         self.new_document_button.set_always_show_arrow(True)
         self.new_document_button.set_icon_name('document-new-symbolic')
