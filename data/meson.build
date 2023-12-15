@@ -1,14 +1,24 @@
+icon_name = 'org.cvfosammmm.Setzer.svg'
+
+if get_option('buildtype') == 'debug'
+  icon_name = 'org.cvfosammmm.Setzer.Devel.svg'
+endif
+
 # .desktop file
 desktop_file =files('org.cvfosammmm.Setzer.desktop')
-install_data(
-  desktop_file,
+configure_file(
+  input: 'org.cvfosammmm.Setzer.desktop',
+  output: 'org.cvfosammmm.Setzer.desktop',
   install_dir: join_paths(datadir, 'applications'),
+  configuration: {
+      'ICON': icon_name,
+    },
 )
 
 # icon
 install_data(
-  files('org.cvfosammmm.Setzer.svg'),
-  install_dir: join_paths(datadir, 'icons', 'hicolor', 'scalable', 'apps'),
+  files(icon_name),
+   install_dir: join_paths(datadir, 'icons', 'hicolor', 'scalable', 'apps'),
 )
 
 # MIME type
