@@ -215,7 +215,7 @@
             "name": "setzer",
             "buildsystem": "meson",
             "config-opts": [
-                "--buildtype=release"
+                "--buildtype=debug"
             ],
             "sources": [
                 {
