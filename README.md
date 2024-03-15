@@ -1,18 +1,14 @@
-# Setzer
+# Setzer Adwaita
 
 Simple yet full-featured LaTeX editor for the GNU/Linux desktop, written in Python with Gtk.
 
-Website: <a href="https://www.cvfosammmm.org/setzer/">https://www.cvfosammmm.org/setzer/</a>
+This is a fork of ![Setzer](https://www.cvfosammmm.org/setzer/">https://www.cvfosammmm.org/setzer/) with a modern Libadwaita coat of paint!
 
-<a href="https://flathub.org/apps/org.cvfosammmm.Setzer"><img src="https://dl.flathub.org/assets/badges/flathub-badge-en.png" width="150" height="50" alt="Download on Flathub"></a>
-
-![Screenshot](https://github.com/cvfosammmm/Setzer/raw/master/data/screenshot.png)
-
-Setzer is a LaTeX editor written in Python with Gtk. I'm happy if you give it a try and provide feedback via the issue tracker here on GitHub, be it about design, code architecture, bugs, feature requests, ...
+![Screenshot](data/screenshot.png)
 
 ## Running Setzer with Gnome Builder
 
-To run Setzer with Gnome Builder just click the "Clone.." button on the start screen, paste in the url (https://github.com/cvfosammmm/Setzer.git), click on "Clone" again, wait for it to download and hit the play button. It will build Setzer and its dependencies and then launch it.
+To run Setzer with Gnome Builder just click the "Clone.." button on the start screen, paste in the url (https://github.com/kinten108101/Setzer.git), click on "Clone" again, wait for it to download and hit the play button. It will build Setzer and its dependencies and then launch it.
 
 Warning: Building Setzer this way may take a long time (~ 30 minutes on my laptop).
 
@@ -42,6 +38,8 @@ To specify a build command open the "Preferences" dialog and choose the command 
 
 ## Getting in touch
 
+Setzer Adwaita development / discussion takes place on GitHub at [https://github.com/kinten108101/setzer](https://github.com/kinten108101/setzer "project url").
+
 Setzer development / discussion takes place on GitHub at [https://github.com/cvfosammmm/setzer](https://github.com/cvfosammmm/setzer "project url").
 
 ## Acknowledgements
@@ -50,4 +48,4 @@ Setzer draws some inspiration from other LaTeX editors. For example the symbols 
 
 ## License
 
-Setzer is licensed under GPL version 3 or later. See the COPYING file for details.
+Setzer Adwaita is licensed under GPL version 3 or later. See the COPYING file for details.
