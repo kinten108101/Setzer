@@ -1,6 +1,6 @@
 # Chisel
 
-Simple yet full-featured LaTeX editor for the GNU/Linux desktop, written in Python with GTK.
+Simple yet full-featured LaTeX editor for the GNOME desktop, written in Python with GTK.
 
 Chisel is a fork of [Setzer](https://www.cvfosammmm.org/setzer/) with a modern Libadwaita coat of paint!
 
