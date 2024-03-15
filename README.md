@@ -2,7 +2,7 @@
 
 Simple yet full-featured LaTeX editor for the GNU/Linux desktop, written in Python with Gtk.
 
-This is a fork of ![Setzer](https://www.cvfosammmm.org/setzer/">https://www.cvfosammmm.org/setzer/) with a modern Libadwaita coat of paint!
+This is a fork of [Setzer](https://www.cvfosammmm.org/setzer/) with a modern Libadwaita coat of paint!
 
 ![Screenshot](data/screenshot.png)
 
