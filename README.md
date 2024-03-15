@@ -1,33 +1,16 @@
-# Setzer Adwaita
+# Chisel
 
-Simple yet full-featured LaTeX editor for the GNU/Linux desktop, written in Python with Gtk.
+Simple yet full-featured LaTeX editor for the GNU/Linux desktop, written in Python with GTK.
 
-This is a fork of [Setzer](https://www.cvfosammmm.org/setzer/) with a modern Libadwaita coat of paint!
+Chisel is a fork of [Setzer](https://www.cvfosammmm.org/setzer/) with a modern Libadwaita coat of paint!
 
 ![Screenshot](data/screenshot.png)
 
-## Running Setzer with Gnome Builder
+## Running Chisel with Gnome Builder
 
-To run Setzer with Gnome Builder just click the "Clone.." button on the start screen, paste in the url (https://github.com/kinten108101/Setzer.git), click on "Clone" again, wait for it to download and hit the play button. It will build Setzer and its dependencies and then launch it.
+To run Chisel with Gnome Builder just click the "Clone.." button on the start screen, paste in the url (https://github.com/kinten108101/Chisel.git), click on "Clone" again, wait for it to download and hit the play button. It will build Setzer and its dependencies and then launch it.
 
 Warning: Building Setzer this way may take a long time (~ 30 minutes on my laptop).
-
-## Running Setzer on Debian (probably Ubuntu, other Distributions too?)
-
-This way is probably a bit faster and may save you some disk space. I develop Setzer on Debian and that's what I tested it with. On Debian derivatives (like Ubuntu) it should probably work the same. On distributions other than Debian and Debian derivatives it should work more or less the same. If you want to run Setzer from source on another distribution and don't know how please open an issue here on GitHub. I will then try to provide instructions for your system.
-
-1. Run the following command to install prerequisite Debian packages:<br />
-`apt-get install meson python3-gi gir1.2-gtk-4.0 gir1.2-gtksource-5 gir1.2-pango-1.0 gir1.2-poppler-0.18 gir1.2-webkit-6.0 gettext python3-cairo python3-gi-cairo python3-pexpect gir1.2-adw-1 python3-bibtexparser python3-willow python3-numpy gir1.2-xdp-1.0`
-
-2. Download und Unpack Setzer from GitHub
-
-3. cd to Setzer folder
-
-4. Run meson: `meson builddir`<br />
-Note: Some distributions may not include systemwide installations of Python modules which aren't installed from distribution packages. In this case, you want to install Setzer in your home directory with `meson builddir --prefix=~/.local`.
-
-5. Install Setzer with: `ninja install -C builddir`<br />
-Or run it locally: `./scripts/setzer.dev`
 
 ## Building your documents from within the app
 
@@ -38,14 +21,14 @@ To specify a build command open the "Preferences" dialog and choose the command 
 
 ## Getting in touch
 
-Setzer Adwaita development / discussion takes place on GitHub at [https://github.com/kinten108101/setzer](https://github.com/kinten108101/setzer "project url").
+Chisel development / discussion takes place on GitHub at [https://github.com/kinten108101/Chisel](https://github.com/kinten108101/setzer "project url").
 
 Setzer development / discussion takes place on GitHub at [https://github.com/cvfosammmm/setzer](https://github.com/cvfosammmm/setzer "project url").
 
 ## Acknowledgements
 
-Setzer draws some inspiration from other LaTeX editors. For example the symbols in the sidebar are mostly the same as in Latexila, though I continue to change / reorganize them. The autocomplete suggestions are mostly the same as in Texmaker. I took some icons from Gnome Builder. Syntax highlighting schemes are based on the Tango scheme in GtkSourceView and the Gnome Builder Scheme.
+Chisel is a fork of Setzer. Most functionalities are borrowed from the master branch of Setzer, while all UI elements are changed to make the app fit in the modern GNOME desktop ecosystem.
 
 ## License
 
-Setzer Adwaita is licensed under GPL version 3 or later. See the COPYING file for details.
+Chisel is licensed under GPL version 3 or later. See the COPYING file for details.
